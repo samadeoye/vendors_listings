@@ -16,7 +16,7 @@ if($httpHost == SITE_DOMAIN)
 else
 {
     //LOCAL
-    $httpFolderPath = 'lamba/';
+    $httpFolderPath = 'Lamba/';
     $isLocal = true;
     $httpHost = 'http://'.$httpHost;
 }

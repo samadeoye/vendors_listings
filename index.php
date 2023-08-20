@@ -58,7 +58,7 @@ use Lamba\BusinessType\BusinessType;
         foreach ($arBusinessTypes as $r)
         { ?>
           <div class="col-md-4 col-sm-6 col-xs-12"> 
-            <a href="listings_list_with_sidebar.html" class="img-box" data-background-image="images/lamba/category.jpg">
+            <a href="listings_list_with_sidebar.html" class="img-box" data-background-image="images/Lamba/category.jpg">
               <div class="utf_img_content_box visible">
                 <h4><?=$r['name']; ?></h4>
                 <span><?=$r['num']; ?> Listings</span>

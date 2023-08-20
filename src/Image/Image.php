@@ -8,7 +8,7 @@ class Image
     static $field;
     static $maxSize = 2 * DEF_MB;
     static $arExtensions = ['jpg', 'jpeg', 'png'];
-    static $directory = 'images/lamba/users/';
+    static $directory = 'images/Lamba/users/';
     public static function uploadImage()
     {
         $imgFileName = $_FILES[self::$field]['name'];

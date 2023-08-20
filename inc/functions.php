@@ -433,6 +433,45 @@ function getCurrentPage($pageTitle)
   return $arCurrentPage;
 }
 
+function getSidebarCurrentPage($pageTitle)
+{
+  $arCurrentPage = [
+    'dashboard' => '',
+    'profile' => '',
+    'addlisting' => '',
+    'listings' => '',
+    'changepass' => '',
+    'payments' => '',
+    'comments' => ''
+  ];
+  switch(strtolower($pageTitle))
+  {
+    case 'dashboard':
+      $arCurrentPage['dashboard'] = 'active';
+    break;
+    case 'profile':
+      $arCurrentPage['profile'] = 'active';
+    break;
+    case 'add listing':
+      $arCurrentPage['addlisting'] = 'active';
+    break;
+    case 'listings':
+      $arCurrentPage['listings'] = 'active';
+    break;
+    case 'change password':
+      $arCurrentPage['changepass'] = 'active';
+    break;
+    case 'payments':
+      $arCurrentPage['payments'] = 'active';
+    break;
+    case 'comments':
+      $arCurrentPage['comments'] = 'active';
+    break;
+  }
+  
+  return $arCurrentPage;
+}
+
 function getUserSessionFields()
 {
   return 'id, fname, lname, email, phone, password, business_name, business_info, address_street, address_city, address_state, business_type_id, logo, facebook, instagram, twitter, paid, status';

@@ -1,7 +1,7 @@
 <?php
 define('SITE_NAME', 'Lamba');
-define('SITE_URL', 'https://lamba.ng');
-define('SITE_DOMAIN', 'lamba.ng');
+define('SITE_URL', 'https://Lamba.ng');
+define('SITE_DOMAIN', 'Lamba.ng');
 
 //
 define('DEF_KB', 1024);

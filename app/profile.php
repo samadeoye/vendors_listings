@@ -1,5 +1,5 @@
 <?php
-$pageTitle = 'Change Password';
+$pageTitle = 'Profile';
 require_once 'inc/head.php';
 ?>
 
@@ -28,7 +28,7 @@ require_once 'inc/head.php';
                     <h4 class="gray"><i class="sl sl-icon-user"></i> Business Details </h4>
                     <div class="utf_dashboard_list_box-static">
                         <?php $logoFileName = !empty($arUser['logo']) ? $arUser['logo'] : 'dummy.png'; ?>
-                        <div class="edit-profile-photo"> <img id="userLogo" src="images/lamba/users/<?=$logoFileName;?>" alt="Business Logo"></div>
+                        <div class="edit-profile-photo"> <img id="userLogo" src="images/Lamba/users/<?=$logoFileName;?>" alt="Business Logo"></div>
                         <form method="post" id="profileForm" onsubmit="return false;" action="crud/actions" enctype="multipart/form-data">
                             <div class="my-profile">
                                 <div class="row with-forms">
@@ -162,7 +162,7 @@ $arAdditionalJsOnLoad[] = <<<EOQ
                         $(formId+' #twitter').val(data.data['twitter']);
                         $(formId+' #logo').val('');
                         $(formId+' #cover_img').val('');
-                        $('#userLogo').attr('src', 'images/lamba/users/'+data.data['logo']);
+                        $('#userLogo').attr('src', 'images/Lamba/users/'+data.data['logo']);
                     }
                     else
                     {
