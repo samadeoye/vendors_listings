@@ -165,6 +165,29 @@ class Param
                     ],
                 ];
             break;
+
+            case 'addlisting':
+                $data = [
+                    'title' => [
+                        'method' => 'post',
+                        'length' => [3,100],
+                        'label' => 'Title',
+                        'required' => true,
+                        'type' => 'string'
+                    ],
+                    'short_desc' => [
+                        'method' => 'post',
+                        'length' => [20,400],
+                        'label' => 'Short Description'
+                    ],
+                    'full_desc' => [
+                        'method' => 'post',
+                        'length' => [20,0],
+                        'label' => 'Full Description',
+                        'required' => true
+                    ]
+                ];
+            break;
         }
         return $data;
     }

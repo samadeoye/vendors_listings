@@ -2,6 +2,9 @@
 $pageTitle = 'Home';
 require_once 'inc/head.php';
 use Lamba\BusinessType\BusinessType;
+use Lamba\Listing\Listing;
+use Lamba\User\User;
+
 ?>
 
 <div class="search_container_block home_main_search_part main_search_block" data-background-image="images/city_search_background.jpg">
@@ -58,7 +61,7 @@ use Lamba\BusinessType\BusinessType;
         foreach ($arBusinessTypes as $r)
         { ?>
           <div class="col-md-4 col-sm-6 col-xs-12"> 
-            <a href="listings_list_with_sidebar.html" class="img-box" data-background-image="images/Lamba/category.jpg">
+            <a href="listings_list_with_sidebar.html" class="img-box" data-background-image="images/woara/<?=$r['img'];?>">
               <div class="utf_img_content_box visible">
                 <h4><?=$r['name']; ?></h4>
                 <span><?=$r['num']; ?> Listings</span>
@@ -86,7 +89,7 @@ use Lamba\BusinessType\BusinessType;
       </div>
       
       <div class="col-md-7 col-sm-6 col-xs-12">
-        <?=SITE_NAME;?> provides hair vendors a platform to explore in their line of business. We have different categories ranging from sales, rentals, partnerships, etc. With a reasonably low amount, you get to put your business to the world.<br>
+        <?=SITE_NAME;?> provides vendors in the line of <b>hair (sales, rentals & partnerships)</b>, jewelleries, skincare and perfumes a platform to explore in their line of business. With a reasonably low amount, you get to put your business to the world.<br>
         Be visible! Obtain new customers and generate more traffic. Improve social media engagement. Get reviews and grow business reputation online. Your company profile can include contacts and description, photo gallery and your business location.
       </div>
   </div>
@@ -101,27 +104,35 @@ use Lamba\BusinessType\BusinessType;
       <div class="row">
         <div class="col-md-12">
           <div class="simple_slick_carousel_block utf_dots_nav"> 
-            <div class="utf_carousel_item">
-              <a href="listings_single_page_1.html" class="utf_listing_item-container compact">
-                <div class="utf_listing_item"> <img src="images/utf_listing_item-01.jpg" alt=""> <span class="tag"><i class="im im-icon-Chef-Hat"></i> Restaurant</span> <span class="featured_tag">Featured</span>
-                  <span class="utf_open_now">Open Now</span>
-                  <div class="utf_listing_item_content">
-                    <div class="utf_listing_prige_block">							
-                    <span class="utf_meta_listing_price"><i class="fa fa-tag"></i> $25 - $55</span>							
-                    <span class="utp_approve_item"><i class="utf_approve_listing"></i></span>
-                  </div>
-                  <h3>Chontaduro Barcelona</h3>
-                  <span><i class="fa fa-map-marker"></i> The Ritz-Carlton, Hong Kong</span>
-                  <span><i class="fa fa-phone"></i> (+15) 124-796-3633</span>											
-                  </div>					  
+            <?php
+              $arListings = Listing::getPaidUsersListings();
+              foreach($arListings as $r)
+              {
+                $rs = User::getUser($r['user_id'], ['business_type_id', 'business_name']);
+                $rsx = BusinessType::getBusinessType($rs['business_type_id'], ['name']);
+                $businessType = $rsx['name'];
+                $coverImgFileName = !empty($r['cover_img']) ? $r['cover_img'] : 'dummy.jpg';
+                $shortDesc = !empty($r['short_desc']) ? $r['short_desc'] : substr($r['full_desc'], 0, 200).'...';
+                ?>
+                <div class="utf_carousel_item">
+                  <a href="listings_single_page_1.html" class="utf_listing_item-container compact">
+                    <div class="utf_listing_item"> <img src="images/woara/users/<?=$coverImgFileName;?>" alt=""> <span class="tag"> <?=$businessType;?> </span>
+                      <div class="utf_listing_item_content">
+                        <div class="utf_listing_prige_block">			
+                          <span class="utp_approve_item"><i class="utf_approve_listing"></i></span>
+                        </div>
+                        <h3><?=$r['title'];?></h3>
+                      </div>					  
+                    </div>
+                    <div class="utf_star_rating_section">
+                      <div> <i class="fa fa-home"></i> <?=$rs['business_name'];?> | <i class="fa fa-eye"></i> 822+ <span> </div>
+                    </div>
+                  </a>
+                  <div><?=$shortDesc;?></div>
                 </div>
-                <div class="utf_star_rating_section" data-rating="4.5">
-                  <div class="utf_counter_star_rating">(4.5)</div>
-                  <span class="utf_view_count"><i class="fa fa-eye"></i> 822+</span>
-                  <span class="like-icon"></span>
-                </div>
-              </a>
-            </div>
+              <?php
+              }
+            ?>
           </div>
         </div>
       </div>

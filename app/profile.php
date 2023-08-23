@@ -10,12 +10,12 @@ require_once 'inc/head.php';
         <div id="titlebar" class="dashboard_gradient">
             <div class="row">
                 <div class="col-md-12">
-                    <h2>Dashboard</h2>
+                    <h2><?=$pageTitle;?></h2>
                     <nav id="breadcrumbs">
                     <ul>
                         <li><a href="<?=DEF_FULL_BASE_PATH_URL;?>">Home</a></li>
                         <li><a href="app/">Dashboard</a></li>
-                        <li>Profile</li>
+                        <li><?=$pageTitle;?></li>
                     </ul>
                     </nav>
                 </div>
@@ -27,8 +27,8 @@ require_once 'inc/head.php';
                 <div class="utf_dashboard_list_box margin-top-0">
                     <h4 class="gray"><i class="sl sl-icon-user"></i> Business Details </h4>
                     <div class="utf_dashboard_list_box-static">
-                        <?php $logoFileName = !empty($arUser['logo']) ? $arUser['logo'] : 'dummy.png'; ?>
-                        <div class="edit-profile-photo"> <img id="userLogo" src="images/Lamba/users/<?=$logoFileName;?>" alt="Business Logo"></div>
+                        <?php $logoFileName = !empty($arUser['logo']) ? $arUser['logo'] : 'dummy.jpg'; ?>
+                        <div class="edit-profile-photo"> <img id="userLogo" src="images/woara/users/<?=$logoFileName;?>" alt="Business Logo"></div>
                         <form method="post" id="profileForm" onsubmit="return false;" action="crud/actions" enctype="multipart/form-data">
                             <div class="my-profile">
                                 <div class="row with-forms">
@@ -77,7 +77,7 @@ require_once 'inc/head.php';
                                     </div>
                                     <div class="col-md-6">
                                         <label>Business Cover Image</label>
-                                        <input type="file" class="input-text" name="cover_img" id="cover_img">
+                                        <input type="file" class="input-text" accept="image/*" name="cover_img" id="cover_img">
                                     </div>
                                     <div class="col-md-12">
                                         <label>Full Business Description <span class="text-red">*</span></label>
@@ -106,7 +106,7 @@ require_once 'inc/head.php';
 		
         <?php require_once 'inc/footer.php'; ?>
 
-    </div>    
+    </div>
   </div>
 </div>
 
@@ -162,7 +162,7 @@ $arAdditionalJsOnLoad[] = <<<EOQ
                         $(formId+' #twitter').val(data.data['twitter']);
                         $(formId+' #logo').val('');
                         $(formId+' #cover_img').val('');
-                        $('#userLogo').attr('src', 'images/Lamba/users/'+data.data['logo']);
+                        $('#userLogo').attr('src', 'images/woara/users/'+data.data['logo']);
                     }
                     else
                     {

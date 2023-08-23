@@ -73,7 +73,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>
 var typed = new Typed('.typed-words', {
-strings: ["Hair Sales"," Hair Rentals"," Hair Business Partnership"],
+strings: ["Hair Sales"," Hair Rentals"," Hair Business Partnership","Jewelleries","Skincare","Perfumes"],
 	typeSpeed: 80,
 	backSpeed: 80,
 	backDelay: 4000,
@@ -81,7 +81,6 @@ strings: ["Hair Sales"," Hair Rentals"," Hair Business Partnership"],
 	loop: true,
 	showCursor: true
 });
-</script>
 
 <?php
 if (count($arAdditionalJs) > 0)
@@ -89,6 +88,8 @@ if (count($arAdditionalJs) > 0)
   echo implode(PHP_EOL, $arAdditionalJs);
 }
 ?>
+
+</script>
 
 <script>
 $(document).ready(function() {

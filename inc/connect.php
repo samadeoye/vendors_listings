@@ -10,7 +10,7 @@ else
 {
     //LOCAL
     $serverName = "localhost";
-    $dbName = "Lamba";
+    $dbName = "woara";
     $userName = "root";
     $password = "";
 }

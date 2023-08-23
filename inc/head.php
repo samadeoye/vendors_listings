@@ -85,7 +85,7 @@ if (count($arAdditionalCSS) > 0)
           </div>
         </div>
         
-        <div id="dialog_signin_part" class="zoom-anim-dialog mfp-hide">
+        <div id="dialog_signin_part" class="dialog_signin_part zoom-anim-dialog mfp-hide">
           <div class="small_dialog_header">
             <h3>Sign In</h3>
           </div>
@@ -157,6 +157,7 @@ if (count($arAdditionalCSS) > 0)
             </div>
           </div>
         </div>
+
       </div>
     </div>    
   </header>

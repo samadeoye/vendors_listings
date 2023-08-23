@@ -285,7 +285,7 @@ textarea {
 	height: auto;
 	line-height: 24px;
 	padding: 15px;
-	min-height: 130px;
+	/* min-height: 130px; */
 	transition: none!important;
 	min-width: 100%;
 }
@@ -10378,6 +10378,10 @@ input[type="radio"] {
     flex: 1;
     max-width: 150px;
     position: relative;
+	/* Sam */
+	width: 300px;
+	height: 300px;
+	object-fit: cover;
 }
 .utf_list_box_listing_item_content {
     flex: 1;
@@ -11214,7 +11218,7 @@ input:checked+.slider:before {
 	margin-bottom: 22px;
 }
 .add_utf_listing_section textarea {
-	min-height: 200px;
+	/* min-height: 200px; */
 	margin-bottom: 35px;
 }
 #utf_add_listing_part h5.fb-input {
@@ -12787,10 +12791,10 @@ button.mfp-close, button.mfp-arrow {
 	-webkit-transform: translate(0, 0);
 	transform: translate(-50%, 0%);
 }
-#small-dialog .mfp-close, #dialog_signin_part, .mfp-close, .mfp-close:hover {
+#small-dialog .mfp-close, .dialog_signin_part, .mfp-close, .mfp-close:hover {
 	color: #fff;
 }
-#dialog_signin_part .mfp-close, #small-dialog .mfp-close {
+.dialog_signin_part .mfp-close, #small-dialog .mfp-close {
 	color: #ff2222;
 	background-color:#fff;
 	border-radius: 30px;
@@ -12799,12 +12803,12 @@ button.mfp-close, button.mfp-arrow {
 	width: 34px;
 	height: 34px;
 }
-#dialog_signin_part .mfp-close:hover, #small-dialog .mfp-close:hover {
+.dialog_signin_part .mfp-close:hover, #small-dialog .mfp-close:hover {
 	color: #666;
 	transform: rotate(0);
 	background-color: #e4e4e4 !important;
 }
-#dialog_signin_part .mfp-close::after, #dialog_signin_part .mfp-close::before, #small-dialog .mfp-close::after, #small-dialog .mfp-close::before {
+.dialog_signin_part .mfp-close::after, .dialog_signin_part .mfp-close::before, #small-dialog .mfp-close::after, #small-dialog .mfp-close::before {
 	top: 0px;
 	height: 9px;
 	font-size: 21px;
@@ -12929,22 +12933,29 @@ button.mfp-close, button.mfp-arrow {
 #small-dialog .utf_message_reply_block button{
 	line-height:26px;
 }
-#dialog_signin_part, #small-dialog {
+.dialog_signin_part, #small-dialog {
 	background: #ffffff;
 	padding:30px 20px;
 	padding-top: 0;
 	text-align: left;
-	max-width: 400px;
+	/* max-width: 400px; */
 	margin: 20px auto;
 	position: relative;
 	box-sizing: border-box;
 	border-radius: 4px;
 }
-#dialog_signin_part {
+#dialog_signin_part.dialog_signin_part, #small-dialog {
+	max-width: 400px;
+}
+#dialog_signin_part.dialog_signin_part {
 	max-width: 450px;
 }
-#dialog_signin_part span.line, #small-dialog span.line {
+.dialog_signin_part span.line, #small-dialog span.line {
 	padding-top: 0;
+}
+#dialogEditListing.dialog_signin_part
+{
+	max-width: 90% !important;
 }
 .my-mfp-zoom-in .zoom-anim-dialog {
 	opacity: 0;
@@ -16489,7 +16500,7 @@ a.utf_dashboard_nav_responsive i {
 	-webkit-columns: 1;
 	-moz-columns: 1;
 }
-#dialog_signin_part .mfp-close::after, #dialog_signin_part .mfp-close::before, #small-dialog .mfp-close::after, #small-dialog .mfp-close::before {
+.dialog_signin_part .mfp-close::after, .dialog_signin_part .mfp-close::before, #small-dialog .mfp-close::after, #small-dialog .mfp-close::before {
 	top: 0px;	
 }
 .slick-dots{
@@ -16557,12 +16568,12 @@ a.utf_dashboard_nav_responsive i {
 	left: -15px;
 	padding:15px 20px;
 }
-#dialog_signin_part, #small-dialog {
+.dialog_signin_part, #small-dialog {
 	background: #fff;
 	padding: 15px;
 	padding-top: 0;
 }
-#dialog_signin_part .mfp-close, #small-dialog .mfp-close {
+.dialog_signin_part .mfp-close, #small-dialog .mfp-close {
 	top: 13px;
 	right: 15px;
 	width: 34px;
@@ -16631,7 +16642,7 @@ a.utf_dashboard_nav_responsive i {
 	padding-right: 80px;
 	line-height: 30Px;
 }
-#dialog_signin_part, #small-dialog {
+.dialog_signin_part, #small-dialog {
 	max-width: 100vw;
 }
 .listing-nav li a {
@@ -18490,4 +18501,29 @@ header.fullwidth .container {
 .text-red
 {
 	color: red !important;
+}
+.text-bold
+{
+	font-weight: bold;
+}
+.myButton {
+	padding: 10px 10px;
+	color: #fff;
+	border-radius: 5px;
+	border: none !important;
+}
+.myButton:hover, .myButton:active, .myButton:link, .myButton:focus {
+	color: #fff;
+}
+.btnDanger {
+	background: #ff2222;
+}
+.btnSuccess {
+	background: green;
+}
+.btnPrimary {
+	background: #205685;
+}
+.pagination li {
+	cursor: pointer !important;
 }

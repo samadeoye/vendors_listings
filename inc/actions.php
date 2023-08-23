@@ -1,6 +1,8 @@
 <?php
 require_once 'utils.php';
 use Lamba\Param\Param;
+use Lamba\User\User;
+use Lamba\Listing\Listing;
 
 $action = isset($_REQUEST['action']) ? trim($_REQUEST['action']) : '';
 if ($action == '')
@@ -13,6 +15,7 @@ doValidateApiParams($params);
 
 try
 {
+    $data = [];
     $db->beginTransaction();
 
     switch($action)
@@ -27,17 +30,40 @@ try
             Lamba\User\User::changePassword();
         break;
         case 'updateprofile':
-            Lamba\User\User::updateUser();
+            User::updateUser();
+            $rs = User::$data;
+            if (count($rs) > 0)
+            {
+                $data = $rs;
+            }
+        break;
+        case 'addlisting':
+            Lamba\Listing\Listing::addListing();
+        break;
+        case 'updatelisting':
+            Lamba\Listing\Listing::updateListing();
+        break;
+        case 'getAppPaginationData':
+            Listing::getAppListingPaginationData();
+            $rs = Listing::$data;
+            if (count($rs) > 0)
+            {
+                $data = $rs;
+            }
+        break;
+        case 'getEditListingModalData':
+            Listing::getEditListingModalData();
+            $rs = Listing::$data;
+            if (count($rs) > 0)
+            {
+                $data = $rs;
+            }
         break;
     }
 
     $db->commit();
-    if ($action == 'updateprofile')
+    if (count($data) > 0)
     {
-        $data = [
-            'status' => true,
-            'data' => $_SESSION['user']
-        ];
         getJsonList($data);
     }
     getJsonRow(true, 'Operation successful!');

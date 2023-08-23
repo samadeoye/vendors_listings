@@ -25,7 +25,6 @@ try {
         console.log(error);
     }
 })(jQuery);
-</script>
 
 <?php
 if (count($arAdditionalJs) > 0)
@@ -33,6 +32,8 @@ if (count($arAdditionalJs) > 0)
   echo implode(PHP_EOL, $arAdditionalJs);
 }
 ?>
+
+</script>
 
 <script>
 $(document).ready(function() {

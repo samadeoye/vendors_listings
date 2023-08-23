@@ -2,6 +2,7 @@
 namespace Lamba\BusinessType;
 
 use Lamba\Crud\Crud;
+use Lamba\user\User;
 
 class BusinessType
 {
@@ -28,7 +29,7 @@ class BusinessType
         $rs = Crud::select(
             self::$table,
             [
-                'columns' => 'id, name, 0 AS num',
+                'columns' => 'id, name, img, 0 AS num',
                 'where' => [
                     'deleted' => 0
                 ],
@@ -68,5 +69,19 @@ EOQ;
         }
 
         return $output;
+    }
+
+    public static function getBusinessType($id, $arFields=['*'])
+    {
+        $fields = is_array($arFields) ? implode(', ', $arFields) : $arFields;
+        return Crud::select(
+            self::$table,
+            [
+                'columns' => $fields,
+                'where' => [
+                    'id' => $id
+                ]
+            ]
+        );
     }
 }

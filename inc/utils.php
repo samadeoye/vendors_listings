@@ -10,13 +10,12 @@ $httpFolderPath = '/';
 if($httpHost == SITE_DOMAIN)
 {
     $isProductionServer = true;
-    //$httpFolderPath = '/api';
     $httpHost = 'https://'.$httpHost;
 }
 else
 {
     //LOCAL
-    $httpFolderPath = 'Lamba/';
+    $httpFolderPath = 'woara/';
     $isLocal = true;
     $httpHost = 'http://'.$httpHost;
 }

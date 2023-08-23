@@ -74,7 +74,7 @@ if (count($arAdditionalCSS) > 0)
         <div class="utf_right_side"> 
           <div class="header_widget"> 
             <div class="utf_user_menu">
-              <div class="utf_user_name"><span><img src="images/Lamba/dash_avatar.png" alt="User Img"></span>Hi, <?=stringToTitle($arUser['fname']);?>!</div>
+              <div class="utf_user_name"><span><img src="images/woara/dash_avatar.png" alt="User Img"></span>Hi, <?=stringToTitle($arUser['fname']);?>!</div>
                 <ul>
                   <li><a href="app/profile"><i class="sl sl-icon-user"></i> My Profile</a></li>
                   <li><a href="app/logout"><i class="sl sl-icon-power"></i> Logout</a></li>

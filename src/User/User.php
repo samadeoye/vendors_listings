@@ -8,6 +8,7 @@ use Lamba\Image\Image;
 class User
 {
     static $table = DEF_TBL_USERS;
+    static $data = [];
     public static function getUser($id, $arFields=['*'])
     {
         $fields = is_array($arFields) ? implode(', ', $arFields) : $arFields;
@@ -90,6 +91,7 @@ class User
         $logoFileSize = $_FILES['logo']['size'];
         $coverImgFileSize = $_FILES['cover_img']['size'];
         
+        $logoFileName = $coverImgFileName = '';
         if ($logoFileSize > 0)
         {
             Image::$field = 'logo';
@@ -121,10 +123,16 @@ class User
             'address_state' => $addressState,
             'facebook' => $facebook,
             'instagram' => $instagram,
-            'twitter' => $twitter,
-            'logo' => $logoFileName,
-            'cover_img' => $coverImgFileName
+            'twitter' => $twitter
         ];
+        if ($logoFileName != '')
+        {
+            $data['logo'] = $logoFileName;
+        }
+        if ($coverImgFileName != '')
+        {
+            $data['cover_img'] = $coverImgFileName;
+        }
         $update = Crud::update(
             self::$table,
             $data,
@@ -137,6 +145,39 @@ class User
             $rs = $_SESSION['user'];
             $rs = array_merge($rs, $data);
             $_SESSION['user'] = $rs;
+
+            $data = [
+                'status' => true,
+                'data' => $_SESSION['user']
+            ];
+            self::$data = $data;
         }
+    }
+
+    public static function getPaidUsersInfo($arFields=['*'])
+    {
+        $fields = is_array($arFields) ? implode(', ', $arFields) : $arFields;
+        return Crud::select(
+            self::$table,
+            [
+                'columns' => $fields,
+                'where' => [
+                    'paid' => 1,
+                    'deleted' => 0
+                ],
+                'return_type' => 'all'
+            ]
+        );
+    }
+
+    public static function getPaidUserIds()
+    {
+        $rs = self::getPaidUsersInfo(['id']);
+        $arIds = [];
+        foreach($rs as $r)
+        {
+            $arIds[] = $r['id'];
+        }
+        return $arIds;
     }
 }

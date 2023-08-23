@@ -455,7 +455,7 @@ function getSidebarCurrentPage($pageTitle)
     case 'add listing':
       $arCurrentPage['addlisting'] = 'active';
     break;
-    case 'listings':
+    case 'my listings':
       $arCurrentPage['listings'] = 'active';
     break;
     case 'change password':
@@ -474,7 +474,7 @@ function getSidebarCurrentPage($pageTitle)
 
 function getUserSessionFields()
 {
-  return 'id, fname, lname, email, phone, password, business_name, business_info, address_street, address_city, address_state, business_type_id, logo, facebook, instagram, twitter, paid, status';
+  return 'id, fname, lname, email, phone, password, business_name, business_info, address_street, address_city, address_state, business_type_id, logo, cover_img, facebook, instagram, twitter, paid, status';
 }
 
 function getUserSession()

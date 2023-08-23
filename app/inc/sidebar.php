@@ -4,7 +4,7 @@
         <ul>
             <li class="<?=$arSidebarCurrentPage['dashboard'];?>"><a href="app/"><i class="sl sl-icon-layers"></i> Dashboard </a></li>
             <li class="<?=$arSidebarCurrentPage['addlisting'];?>"><a href="app/addlisting"><i class="sl sl-icon-plus"></i> Add Listing </a></li>
-            <li class="<?=$arSidebarCurrentPage['listings'];?>"><a href=""><i class="sl sl-icon-layers"></i> My Listings </a></li>
+            <li class="<?=$arSidebarCurrentPage['listings'];?>"><a href="app/listings"><i class="sl sl-icon-layers"></i> My Listings </a></li>
             <li class="<?=$arSidebarCurrentPage['comments'];?>"><a href=""><i class="sl sl-icon-envelope-open"></i> Comments </a></li>
             <li class="<?=$arSidebarCurrentPage['payments'];?>"><a href=""><i class="sl sl-icon-wallet"></i> Payments </a></li>                           		 
             <li class="<?=$arSidebarCurrentPage['profile'];?>"><a href="app/profile"><i class="sl sl-icon-user"></i> Profile </a></li>
