@@ -11,4 +11,5 @@ define('DEF_TBL_USERS', 'users');
 define('DEF_TBL_GALLERY', 'gallery');
 define('DEF_TBL_BUSINESS_TYPES', 'business_types');
 define('DEF_TBL_LISTINGS', 'listings');
+define('DEF_TBL_LISTING_COMMENTS', 'listing_comments');
 ?>

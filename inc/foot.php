@@ -72,15 +72,6 @@
 <script src="scripts/functions.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>
-var typed = new Typed('.typed-words', {
-strings: ["Hair Sales"," Hair Rentals"," Hair Business Partnership","Jewelleries","Skincare","Perfumes"],
-	typeSpeed: 80,
-	backSpeed: 80,
-	backDelay: 4000,
-	startDelay: 1000,
-	loop: true,
-	showCursor: true
-});
 
 <?php
 if (count($arAdditionalJs) > 0)

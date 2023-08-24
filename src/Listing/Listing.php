@@ -9,6 +9,7 @@ use Lamba\User\User;
 class Listing
 {
     static $table = DEF_TBL_LISTINGS;
+    static $tableComments = DEF_TBL_LISTING_COMMENTS;
     static $data;
     static $appPerPage = 10;
     public static function checkIfListingExists($field, $value, $excludeId='')
@@ -113,6 +114,27 @@ class Listing
         );
     }
 
+    public static function deleteListing()
+    {
+        $id = trim($_REQUEST['id']);
+
+        Crud::update(
+            self::$table,
+            ['deleted' => 1],
+            ['id' => $id]
+        );
+    }
+
+    public static function updateListingViews($id)
+    {
+        $rs = self::getListing($id, ['views']);
+        Crud::update(
+            self::$table,
+            ['views' => $rs['views'] + 1],
+            ['id' => $id]
+        );
+    }
+
     public static function getListing($id, $arFields=['*'])
     {
         $fields = is_array($arFields) ? implode(', ', $arFields) : $arFields;
@@ -199,7 +221,7 @@ class Listing
                     <div class="utf_list_box_listing_item-img"><a><img src="images/woara/users/{$coverImgFileName}" alt=""></a></div>
                     <div class="utf_list_box_listing_item_content">
                         <div class="inner">
-                            <div class="margin-bottom-10">
+                            <div class="margin-bottom-20">
                                 <a href="#dialogEditListing" onclick="doOpenEditListingModal('{$r['id']}')" id="btnEditListing" class="myButton btnPrimary sign-in popup-with-zoom-anim"><i class="fa fa-pencil"></i> Edit</a>
                                 <a id="btnDeleteListing" onclick="doOpenDeleteListingModal('{$r['id']}')" class="myButton btnDanger"><i class="fa fa-trash-o"></i> Delete</a>
                             </div>
@@ -279,7 +301,7 @@ EOQ;
             <ul>
             <li><a onclick="{$prevOnClick}"><i class="sl sl-icon-arrow-left"></i></a></li>
 EOQ;
-        for($i = 1; $i <= $total; $i++)
+        for($i = 1; $i <= $lastPage; $i++)
         {
             $current = '';
             $onClick = "showPagination('{$i}')";
@@ -310,5 +332,159 @@ EOQ;
             'status' => true,
             'data' => $rs
         ];
+    }
+
+    public static function addComment()
+    {
+        $name = strToUpper(trim($_REQUEST['name']));
+        $email = strtolower(trim($_REQUEST['email']));
+        $message = trim($_REQUEST['msg']);
+        $listingId = trim($_REQUEST['listing_id']);
+
+        $data = [
+            'id' => getNewId(),
+            'name' => $name,
+            'email' => $email,
+            'message' => $message,
+            'listing_id' => $listingId,
+            'cdate' => time()
+        ];
+        Crud::insert(self::$tableComments, $data);
+    }
+
+    public static function getListingComments($listingId, $page=1, $arFields=['*'])
+    {
+        $fields = is_array($arFields) ? implode(', ', $arFields) : $arFields;
+
+        $perPage = self::$appPerPage;
+        if($page <= 1)
+        {
+            $limit = '0,'.$perPage;
+        }
+        else
+        {
+            $offset = doTypeCastDouble(($page - 1) * $perPage);
+            $limit = $offset.','.$perPage;
+        }
+        $data = [
+            'columns' => $fields,
+            'where' => [
+                'listing_id' => $listingId,
+                'deleted' => 0
+            ],
+            'return_type' => 'all',
+            'order' => 'cdate ASC',
+        ];
+        if($limit != '')
+        {
+            $data['limit'] = $limit;
+        }
+
+        return Crud::select(
+            self::$tableComments,
+            $data
+        );
+    }
+    public static function getListingCommentContent($listingId, $page=1)
+    {
+        $rs = self::getListingComments($listingId, $page);
+        $output = '';
+        foreach($rs as $r)
+        {
+            $cdate = getFormattedDate($r['cdate']);
+            $output .= <<<EOQ
+            <li>
+                <div class="avatar"><img src="images/woara/dash_avatar.png" alt="" /></div>
+                <div class="utf_comment_content">        
+                    <div class="utf_by_comment">
+                        {$r['name']} <span class="date"><i class="fa fa-clock-o"></i> {$cdate} </span>
+                    </div>
+                    <p>{$r['message']}</p>                                  
+                </div>
+            </li>
+EOQ;
+        }
+
+        return $output;
+    }
+    public static function getListingCommentsTotal($listingId)
+    {
+        $rsTotal = Crud::select(
+            self::$tableComments,
+            [
+                'columns' => 'COUNT(id) AS total',
+                'where' => [
+                    'listing_id' => $listingId,
+                    'deleted' => 0
+                ],
+            ]
+        );
+        return doTypeCastDouble($rsTotal['total']);
+    }
+    public static function getListingCommentsPaginationData()
+    {
+        $listingId = trim($_REQUEST['listing_id']);
+        $page = doTypeCastInt($_REQUEST['page']);
+        $pagination = self::getListingCommentsPagination($listingId, $page);
+        $list = self::getListingCommentContent($listingId, $page);
+
+        $data = [
+            'pagination' => $pagination,
+            'list' => $list
+        ];
+
+        self::$data = [
+            'status' => true,
+            'data' => $data
+        ];
+    }
+    public static function getListingCommentsPagination($listingId, $page=1)
+    {
+        $total = self::getListingCommentsTotal($listingId);
+        //get last page
+        $total = self::getListingCommentsTotal($listingId);
+        $perPage = self::$appPerPage;
+        $lastPage = ceil($total / $perPage);
+        
+        $prev = $page - 1;
+        $next = $page + 1;
+
+        $prevOnClick = "showPagination('{$prev}')";
+        $nextOnClick = "showPagination('{$next}')";
+        if ($page <= 1)
+        {
+            $prevOnClick = '';
+        }
+        if ($page >= $lastPage)
+        {
+            $nextOnClick = '';
+        }
+
+        $output = <<<EOQ
+        <nav class="pagination" id="listingReviewPagination">
+            <input type="hidden" name="currentPage" id="currentPage" value="{$page}">
+            <ul>
+            <li><a onclick="{$prevOnClick}"><i class="sl sl-icon-arrow-left"></i></a></li>
+EOQ;
+        for($i = 1; $i <= $lastPage; $i++)
+        {
+            $current = '';
+            $onClick = "showPagination('{$i}')";
+            if ($i == $page)
+            {
+                $current = 'current-page';
+                $onClick = '';
+            }
+            $output .= <<<EOQ
+            <li><a onclick="{$onClick}" class="{$current}">{$i}</a></li>
+EOQ;
+        }
+        $output .= <<<EOQ
+            <li><a onclick="{$nextOnClick}"><i class="sl sl-icon-arrow-right"></i></a></li>
+            </ul>
+        </nav>
+EOQ;
+
+        return $output;
     }
 }

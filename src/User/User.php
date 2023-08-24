@@ -180,4 +180,28 @@ class User
         }
         return $arIds;
     }
+
+    public static function getUserAddress($street, $city, $state)
+    {
+        $ar = [];
+        if (strlen($street) > 0)
+        {
+            $ar[] = $street;
+        }
+        if (strlen($city) > 0)
+        {
+            $ar[] = $city;
+        }
+        if (strlen($state) > 0)
+        {
+            $ar[] = $state;
+        }
+
+        $address = '';
+        if (count($ar) > 0)
+        {
+            $address = implode(', ', $ar);
+        }
+        return $address;
+    }
 }

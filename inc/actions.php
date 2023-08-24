@@ -27,7 +27,7 @@ try
             Lamba\Auth\Login::loginUser();
         break;
         case 'changepassword':
-            Lamba\User\User::changePassword();
+            User::changePassword();
         break;
         case 'updateprofile':
             User::updateUser();
@@ -38,10 +38,10 @@ try
             }
         break;
         case 'addlisting':
-            Lamba\Listing\Listing::addListing();
+            Listing::addListing();
         break;
         case 'updatelisting':
-            Lamba\Listing\Listing::updateListing();
+            Listing::updateListing();
         break;
         case 'getAppPaginationData':
             Listing::getAppListingPaginationData();
@@ -58,6 +58,20 @@ try
             {
                 $data = $rs;
             }
+        break;
+        case 'addreview':
+            Listing::addComment();
+        break;
+        case 'getReviewPaginationData':
+            Listing::getListingCommentsPaginationData();
+            $rs = Listing::$data;
+            if (count($rs) > 0)
+            {
+                $data = $rs;
+            }
+        break;
+        case 'deletelisting':
+            Listing::deleteListing();
         break;
     }
 

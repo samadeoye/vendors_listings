@@ -115,7 +115,7 @@ use Lamba\User\User;
                 $shortDesc = !empty($r['short_desc']) ? $r['short_desc'] : substr($r['full_desc'], 0, 200).'...';
                 ?>
                 <div class="utf_carousel_item">
-                  <a href="listings_single_page_1.html" class="utf_listing_item-container compact">
+                  <a href="listing?id=<?=$r['id'];?>" class="utf_listing_item-container compact">
                     <div class="utf_listing_item"> <img src="images/woara/users/<?=$coverImgFileName;?>" alt=""> <span class="tag"> <?=$businessType;?> </span>
                       <div class="utf_listing_item_content">
                         <div class="utf_listing_prige_block">			
@@ -125,7 +125,7 @@ use Lamba\User\User;
                       </div>					  
                     </div>
                     <div class="utf_star_rating_section">
-                      <div> <i class="fa fa-home"></i> <?=$rs['business_name'];?> | <i class="fa fa-eye"></i> 822+ <span> </div>
+                      <div> <i class="fa fa-home"></i> <?=$rs['business_name'];?> | <i class="fa fa-eye"></i> <?=$r['views'];?> <span> </div>
                     </div>
                   </a>
                   <div><?=$shortDesc;?></div>
@@ -147,5 +147,16 @@ use Lamba\User\User;
 </a>
 
 <?php
+$arAdditionalJs[] = <<<EOQ
+  var typed = new Typed('.typed-words', {
+  strings: ["Hair Sales"," Hair Rentals"," Hair Business Partnership","Jewelleries","Skincare","Perfumes"],
+    typeSpeed: 80,
+    backSpeed: 80,
+    backDelay: 4000,
+    startDelay: 1000,
+    loop: true,
+    showCursor: true
+  });
+EOQ;
 require_once 'inc/foot.php';
 ?>

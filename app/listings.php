@@ -84,6 +84,7 @@ use Lamba\Listing\Listing;
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <?php
 $arAdditionalJs[] = <<<EOQ
     function showPagination(page)
@@ -156,7 +157,40 @@ $arAdditionalJs[] = <<<EOQ
     }
     function doOpenDeleteListingModal(id)
     {
-        alert(id + ' - to use swal');
+        Swal.fire({
+        title: '',
+        text: 'Are you sure you want to delete this listing?',
+        icon: 'error',
+        showCancelButton: true,
+        reverseButtons: true,
+        confirmButtonText: 'Delete',
+        confirmButtonColor: '#d33',
+        customClass: 'swalWide',
+        }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+            url: 'inc/actions',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    'id': id,
+                    'action': 'deletelisting'
+                },
+                success: function(data)
+                {
+                    if(data.status) {
+                        throwSuccess(data.msg);
+                        var currentPage = $('#appListingPagination #currentPage').val();
+                        showPagination(currentPage);
+                    }
+                    else
+                    {
+                        throwError(data.msg);
+                    }
+                }
+            });
+        }
+        });
     }
 EOQ;
 $arAdditionalJsOnLoad[] = <<<EOQ
@@ -199,7 +233,7 @@ $arAdditionalJsOnLoad[] = <<<EOQ
                 {
                     if(data.status == true)
                     {
-                        var currentPage = $('#appListingPagination #currentPage').val();
+                        //var currentPage = $('#appListingPagination #currentPage').val();
                         //showPagination(currentPage);
                         throwSuccess('Listing updated successfully!');
                         //$.magnificPopup.close();

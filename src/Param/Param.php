@@ -188,6 +188,34 @@ class Param
                     ]
                 ];
             break;
+
+            case 'addreview':
+                $data = [
+                    'name' => [
+                        'method' => 'post',
+                        'length' => [3,100],
+                        'label' => 'name',
+                        'required' => true
+                    ],
+                    'email' => [
+                        'method' => 'post',
+                        'length' => [13,100],
+                        'label' => 'Email'
+                    ],
+                    'msg' => [
+                        'method' => 'post',
+                        'length' => [5,0],
+                        'label' => 'Comment',
+                        'required' => true
+                    ],
+                    'listing_id' => [
+                        'method' => 'post',
+                        'length' => [36,36],
+                        'label' => 'Listing',
+                        'required' => true
+                    ]
+                ];
+            break;
         }
         return $data;
     }

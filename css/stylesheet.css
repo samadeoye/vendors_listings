@@ -18511,6 +18511,7 @@ header.fullwidth .container {
 	color: #fff;
 	border-radius: 5px;
 	border: none !important;
+	cursor: pointer;
 }
 .myButton:hover, .myButton:active, .myButton:link, .myButton:focus {
 	color: #fff;
@@ -18526,4 +18527,7 @@ header.fullwidth .container {
 }
 .pagination li {
 	cursor: pointer !important;
+}
+.swalWide {
+    font-size: 20px !important;
 }
