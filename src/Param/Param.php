@@ -194,7 +194,7 @@ class Param
                     'name' => [
                         'method' => 'post',
                         'length' => [3,100],
-                        'label' => 'name',
+                        'label' => 'Name',
                         'required' => true
                     ],
                     'email' => [
@@ -212,6 +212,85 @@ class Param
                         'method' => 'post',
                         'length' => [36,36],
                         'label' => 'Listing',
+                        'required' => true
+                    ]
+                ];
+            break;
+
+            case 'sendContactForm':
+                $data = [
+                    'fname' => [
+                        'method' => 'post',
+                        'length' => [3,100],
+                        'label' => 'First Name',
+                        'required' => true
+                    ],
+                    'lname' => [
+                        'method' => 'post',
+                        'length' => [3,100],
+                        'label' => 'Last Name',
+                        'required' => true
+                    ],
+                    'email' => [
+                        'method' => 'post',
+                        'length' => [13,100],
+                        'label' => 'Email',
+                        'required' => true
+                    ],
+                    'subject' => [
+                        'method' => 'post',
+                        'length' => [5,200],
+                        'label' => 'Subject'
+                    ],
+                    'msg' => [
+                        'method' => 'post',
+                        'length' => [20,0],
+                        'label' => 'Message',
+                        'required' => true
+                    ]
+                ];
+            break;
+
+            case 'forgotPassVerifyEmail':
+                $data = [
+                    'email' => [
+                        'method' => 'post',
+                        'length' => [13,100],
+                        'label' => 'Email',
+                        'required' => true
+                    ]
+                ];
+            break;
+
+            case 'resetpassword':
+                $data = [
+                    'token' => [
+                        'method' => 'post',
+                        'length' => [36,36],
+                        'label' => 'Token',
+                        'required' => true
+                    ],
+                    'password' => [
+                        'method' => 'post',
+                        'length' => [6,0],
+                        'label' => 'Password',
+                        'required' => true
+                    ],
+                    'password_confirm' => [
+                        'method' => 'post',
+                        'length' => [6,0],
+                        'label' => 'Password Confirm',
+                        'required' => true
+                    ]
+                ];
+            break;
+
+            case 'makepayment':
+                $data = [
+                    'payment_plan_id' => [
+                        'method' => 'post',
+                        'length' => [36,36],
+                        'label' => 'Payment Plan',
                         'required' => true
                     ]
                 ];

@@ -1,8 +1,13 @@
 <?php
 require_once 'utils.php';
+
 use Lamba\Param\Param;
 use Lamba\User\User;
 use Lamba\Listing\Listing;
+use Lamba\Listing\ListingSearch;
+use Lamba\Comment\Comment;
+use Lamba\Contact\Contact;
+use Lamba\Payment\Payment;
 
 $action = isset($_REQUEST['action']) ? trim($_REQUEST['action']) : '';
 if ($action == '')
@@ -72,6 +77,45 @@ try
         break;
         case 'deletelisting':
             Listing::deleteListing();
+        break;
+        case 'getListingPaginationData':
+            ListingSearch::getListingsPaginationData();
+            $rs = Listing::$data;
+            if (count($rs) > 0)
+            {
+                $data = $rs;
+            }
+        break;
+        case 'getUserListingsPaginationData':
+            Comment::getUserListingsCommentsPaginationData();
+            $rs = Comment::$data;
+            if (count($rs) > 0)
+            {
+                $data = $rs;
+            }
+        break;
+        case 'deletecomment':
+            Comment::deleteComment();
+        break;
+        case 'enableDisableComment':
+            Comment::enableDisableComment();
+        break;
+        case 'sendContactForm':
+            Contact::addContactMessage();
+        break;
+        case 'forgotPassVerifyEmail':
+            User::verifyEmailForPasswordReset();
+        break;
+        case 'resetpassword':
+            User::resetPassword();
+        break;
+        case 'makepayment':
+            Payment::makePayment();
+            $rs = Payment::$data;
+            if (count($rs) > 0)
+            {
+                $data = $rs;
+            }
         break;
     }
 

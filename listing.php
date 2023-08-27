@@ -1,5 +1,11 @@
 <?php
+require_once 'inc/utils.php';
 $pageTitle = 'Listings';
+
+$arAdditionalCSS[] = <<<EOQ
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@1.3.3/dist/css/splide.min.css">
+EOQ;
+
 require_once 'inc/head.php';
 use Lamba\Listing\Listing;
 use Lamba\User\User;
@@ -26,25 +32,40 @@ $userAddress = User::getUserAddress(
     $arUserInfo['address_city'],
     $arUserInfo['address_state']
 );
-$rsx = BusinessType::getBusinessType($arUserInfo['business_type_id'], ['name']);
+$rsx = BusinessType::getBusinessType($rs['category_id'], ['name']);
 $businessTypeName = $rsx['name'];
-$arGallery = explode(',', $rs['gallery_img']);
-
-if (count($arGallery) > 0)
-{?>
-    <div id="utf_listing_gallery_part" class="utf_listing_section">
-        <div class="utf_listing_slider utf_gallery_container margin-bottom-0">
-            <?php
-            foreach($arGallery as $gImg)
-            {?>
-                <a href="images/woara/users/<?=$gImg;?>" data-background-image="images/woara/users/<?=$gImg;?>" class="item utf_gallery"></a> 
-            <?php
-            } ?>
-        </div>
-    </div>
-<?php
+$arGallery = [$rs['cover_img']];
+$galleryImages = $rs['gallery_img'];
+if ($galleryImages != '')
+{
+    $arGallery = array_merge([$rs['cover_img']], explode(',', $rs['gallery_img']));
 }
 ?>
+<section id="main-carousel" class="splide" aria-label="My Awesome Gallery">
+    <div class="splide__track">
+    <ul class="splide__list">
+    <?php
+    foreach($arGallery as $gImg)
+    {?>
+        <li class="splide__slide">
+            <img src="images/woara/users/<?=$gImg;?>" alt="">
+        </li>
+    <?php
+    } ?>
+    </ul>
+    </div>
+</section>
+
+<ul id="thumbnails" class="thumbnails">
+    <?php
+    foreach($arGallery as $gImg)
+    {?>
+        <li class="thumbnail">
+            <img src="images/woara/users/<?=$gImg;?>" alt="">
+        </li>
+    <?php
+    } ?>
+</ul>
 
 <div class="container">
     <div class="row utf_sticky_main_wrapper">
@@ -141,7 +162,7 @@ if (count($arGallery) > 0)
                     $arBusinessTypes = BusinessType::getBusinessTypesWithCounts();
                     foreach($arBusinessTypes as $r)
                     { ?>
-                        <li><i class="fa fa-angle-double-right"></i> <a><?=$r['name'];?></a></li>
+                        <li><i class="fa fa-angle-double-right"></i> <a href="listings?categoryId=<?=$r['id'];?>"><?=$r['name'];?></a></li>
                     <?php
                     }
                     ?>
@@ -152,6 +173,7 @@ if (count($arGallery) > 0)
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@1.3.3/dist/js/splide.min.js"></script>
 <?php
 $arAdditionalJs[] = <<<EOQ
 function showPagination(page)
@@ -186,6 +208,38 @@ function showPagination(page)
         });
     }
 }
+
+var splide = new Splide( '#main-carousel', {
+    pagination: false,
+} );
+
+var thumbnails = document.getElementsByClassName( 'thumbnail' );
+var current;
+
+for ( var i = 0; i < thumbnails.length; i++ ) {
+    initThumbnail( thumbnails[ i ], i );
+}
+
+function initThumbnail( thumbnail, index ) {
+    thumbnail.addEventListener( 'click', function () {
+    splide.go( index );
+    } );
+}
+
+splide.on( 'mounted move', function () {
+    var thumbnail = thumbnails[ splide.index ];
+
+    if ( thumbnail ) {
+    if ( current ) {
+        current.classList.remove( 'is-active' );
+    }
+
+    thumbnail.classList.add( 'is-active' );
+    current = thumbnail;
+    }
+} );
+
+splide.mount();
 EOQ;
 
 $arAdditionalJsOnLoad[] = <<<EOQ
@@ -216,14 +270,14 @@ $arAdditionalJsOnLoad[] = <<<EOQ
                 dataType: 'json',
                 data: form.serialize(),
                 beforeSend: function() {
-                    enableDisableBtn(formId+' #btnSumbmit', 0);
+                    enableDisableBtn(formId+' #btnSubmit', 0);
                 },
                 complete: function() {
-                    enableDisableBtn(formId+' #btnSumbmit', 1);
+                    enableDisableBtn(formId+' #btnSubmit', 1);
                 },
                 success: function(data)
                 {
-                    if(data.status == true)
+                    if(data.status)
                     {
                         throwSuccess('Comment posted successfully!');
                         form[0].reset();

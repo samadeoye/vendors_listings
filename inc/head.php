@@ -1,5 +1,4 @@
 <?php
-require_once 'utils.php';
 $arCurrentPage = getCurrentPage($pageTitle);
 ?>
 
@@ -112,7 +111,7 @@ if (count($arAdditionalCSS) > 0)
                     </label>
                   </p>
                   <div class="utf_row_form utf_form_wide_block form_forgot_part">
-                    <span class="lost_password fl_left"> <a href="javascript:void(0);">Forgot Password?</a> </span>
+                    <span class="lost_password fl_left"> <a href="app/forgotpass">Forgot Password?</a> </span>
                   </div>
                   <div class="utf_row_form">
                     <button class="button border fw margin-top-10" id="btnSubmit">Login</button>

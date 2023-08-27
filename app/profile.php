@@ -1,4 +1,5 @@
 <?php
+require_once '../inc/utils.php';
 $pageTitle = 'Profile';
 require_once 'inc/head.php';
 ?>
@@ -138,10 +139,10 @@ $arAdditionalJsOnLoad[] = <<<EOQ
                 processData: false,
                 contentType: false,
                 beforeSend: function() {
-                    enableDisableBtn(formId+' #btnSumbmit', 0);
+                    enableDisableBtn(formId+' #btnSubmit', 0);
                 },
                 complete: function() {
-                    enableDisableBtn(formId+' #btnSumbmit', 1);
+                    enableDisableBtn(formId+' #btnSubmit', 1);
                 },
                 success: function(data)
                 {

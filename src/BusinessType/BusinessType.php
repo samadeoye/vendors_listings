@@ -42,11 +42,11 @@ class BusinessType
             foreach($rs as $r)
             {
                 $rsx = Crud::select(
-                    DEF_TBL_USERS,
+                    DEF_TBL_LISTINGS,
                     [
                         'columns' => 'COUNT(id) AS num',
                         'where' => [
-                            'business_type_id' => $r['id'],
+                            'category_id' => $r['id'],
                             'deleted' => 0
                         ]
                     ]
@@ -57,6 +57,7 @@ class BusinessType
         }
         return $ar;
     }
+    
     public static function getBusinessTypeDropdownOptions()
     {
         $rs = self::getBusinessTypes();

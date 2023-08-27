@@ -13,6 +13,7 @@
 <script src="scripts/jquery_custom.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="scripts/functions.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 (function($) {
 try {
@@ -33,6 +34,24 @@ if (count($arAdditionalJs) > 0)
 }
 ?>
 
+function doOpenLogoutModal()
+{
+  Swal.fire({
+    title: '',
+    text: 'Are you sure you want to logout?',
+    icon: 'error',
+    showCancelButton: true,
+    reverseButtons: true,
+    confirmButtonText: 'Logout',
+    confirmButtonColor: '#d33',
+    customClass: 'swalWide',
+    }).then((result) => {
+    if (result.isConfirmed) {
+      window.location.href = 'app/logout';
+    }
+  });
+}
+
 </script>
 
 <script>
@@ -43,6 +62,16 @@ $(document).ready(function() {
     echo implode(PHP_EOL, $arAdditionalJsOnLoad);
   }
   ?>
+  
+  $('#logoutSidebarBtn').click(function()
+  {
+    doOpenLogoutModal();
+  });
+  $('#logoutHeaderBtn').click(function()
+  {
+    doOpenLogoutModal();
+  });
+
 });
 </script>
 

@@ -5,11 +5,12 @@ use Exception;
 use Lamba\Crud\Crud;
 use Lamba\Image\Image;
 use Lamba\User\User;
+use Lamba\BusinessType\BusinessType;
 
 class Listing
 {
     static $table = DEF_TBL_LISTINGS;
-    static $tableComments = DEF_TBL_LISTING_COMMENTS;
+    static $tableComments = DEF_TBL_LISTINGS_COMMENTS;
     static $data;
     static $appPerPage = 10;
     public static function checkIfListingExists($field, $value, $excludeId='')
@@ -36,7 +37,9 @@ class Listing
     }
     public static function addListing()
     {
-        global $userId;
+        global $arUser;
+
+        $userId = $arUser['id'];
 
         $title = stringToUpper(trim($_REQUEST['title']));
         $shortDesc = trim($_REQUEST['short_desc']);
@@ -81,6 +84,7 @@ class Listing
         $data = [
             'id' => getNewId(),
             'title' => $title,
+            'category_id' => $arUser['business_type_id'],
             'user_id' => $userId,
             'short_desc' => $shortDesc,
             'full_desc' => $fullDesc,
@@ -211,6 +215,10 @@ class Listing
     public static function getAppUserListingsContent($page=1)
     {
         $rs = self::getUserListings($page);
+        if (count($rs) == 0)
+        {
+            return 'No listing yet';
+        }
         $output = '';
         foreach($rs as $r)
         {
@@ -276,8 +284,11 @@ EOQ;
     public static function getAppUserListingPagination($page=1)
     {
         $total = self::getAppUserListingTotal();
+        if ($total == 0)
+        {
+            return '';
+        }
         //get last page
-        $total = self::getAppUserListingTotal();
         $perPage = self::$appPerPage;
         $lastPage = ceil($total / $perPage);
         
@@ -336,6 +347,8 @@ EOQ;
 
     public static function addComment()
     {
+        global $userId;
+
         $name = strToUpper(trim($_REQUEST['name']));
         $email = strtolower(trim($_REQUEST['email']));
         $message = trim($_REQUEST['msg']);
@@ -347,6 +360,7 @@ EOQ;
             'email' => $email,
             'message' => $message,
             'listing_id' => $listingId,
+            'user_id' => $userId,
             'cdate' => time()
         ];
         Crud::insert(self::$tableComments, $data);
@@ -370,6 +384,7 @@ EOQ;
             'columns' => $fields,
             'where' => [
                 'listing_id' => $listingId,
+                'status' => 1,
                 'deleted' => 0
             ],
             'return_type' => 'all',
@@ -388,6 +403,11 @@ EOQ;
     public static function getListingCommentContent($listingId, $page=1)
     {
         $rs = self::getListingComments($listingId, $page);
+        if (count($rs) == 0)
+        {
+            return 'No comment yet.';
+        }
+
         $output = '';
         foreach($rs as $r)
         {
@@ -415,6 +435,7 @@ EOQ;
                 'columns' => 'COUNT(id) AS total',
                 'where' => [
                     'listing_id' => $listingId,
+                    'status' => 1,
                     'deleted' => 0
                 ],
             ]
@@ -441,8 +462,11 @@ EOQ;
     public static function getListingCommentsPagination($listingId, $page=1)
     {
         $total = self::getListingCommentsTotal($listingId);
+        if ($total == 0)
+        {
+            return '';
+        }
         //get last page
-        $total = self::getListingCommentsTotal($listingId);
         $perPage = self::$appPerPage;
         $lastPage = ceil($total / $perPage);
         
@@ -486,5 +510,10 @@ EOQ;
 EOQ;
 
         return $output;
+    }
+
+    public static function getPaidUserIds($businessTypeId='')
+    {
+        return User::getPaidUserIds($businessTypeId);
     }
 }

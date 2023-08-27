@@ -1913,14 +1913,14 @@ background-color:rgba(0,0,0,0.3);
 .listing_filter_block .utf_search_map_section li{
 	margin-bottom:0
 }
-.sort-by {
+/* .sort-by {
 	position: relative;
 	top: 9px;
 }
 .sort-by label, .sort-by .utf_sort_by_select_item {
 	display: inline-block;
 	float: right;
-}
+} */
 .utf_dashboard_list_box .sort-by .utf_sort_by_select_item{
 	margin-top:-10px;
 	margin-right:-5px
@@ -1940,14 +1940,14 @@ background-color:rgba(0,0,0,0.3);
 .listing_filter_block .utf_sort_by_select_item select{
 	margin-bottom:10px !important;
 }
-.sort_by_margin{
+/* .sort_by_margin{
 	margin-left:10px;
 }
 .sort-by label {
 	line-height: 40px;
 	margin-top: 1px;
 	padding: 0;
-}
+} */
 .sort-by .chosen-container-single .chosen-single {
 	height: 40px;
 	line-height: 38px;
@@ -9085,7 +9085,8 @@ span.like-icon {
 	position: relative;
     padding-top: 60px;
     padding-bottom: 60px;
-    background-image: url(../images/page-title.jpg);
+    /* background-image: url(../images/page-title.jpg); */
+	background-image: url(../images/woara/page-title.jpg);
     background-position: center;
     background-size: cover;
     background-attachment: fixed;
@@ -12957,6 +12958,22 @@ button.mfp-close, button.mfp-arrow {
 {
 	max-width: 90% !important;
 }
+
+@media screen and (max-width: 600px)
+{
+	#dialogMakePayment.dialog_signin_part
+	{
+		max-width: 100% !important;
+	}
+}
+@media screen and (min-width: 600px)
+{
+	#dialogMakePayment.dialog_signin_part
+	{
+		max-width: 50% !important;
+	}
+}
+
 .my-mfp-zoom-in .zoom-anim-dialog {
 	opacity: 0;
 	-webkit-transition: all 0.2s ease-in-out;
@@ -18513,8 +18530,20 @@ header.fullwidth .container {
 	border: none !important;
 	cursor: pointer;
 }
+.myBadge {
+	padding: 3px 3px;
+	/* margin-top: 10px !important; */
+	margin-bottom: 10px !important;
+	color: #fff !important;
+	border-radius: 3px;
+	border: none !important;
+	text-align: center !important;
+}
 .myButton:hover, .myButton:active, .myButton:link, .myButton:focus {
 	color: #fff;
+}
+.btnDisable {
+	background: #bf2f29;
 }
 .btnDanger {
 	background: #ff2222;
@@ -18530,4 +18559,49 @@ header.fullwidth .container {
 }
 .swalWide {
     font-size: 20px !important;
+}
+
+.thumbnails, .splide__slide {
+	display: flex;
+	margin: 1rem auto 0;
+	padding: 0;
+	justify-content: center;
+}
+#main-carousel
+{
+	background-color: #205685;
+}
+.splide__slide {
+	height: 400px;
+	width: auto;
+	object-fit: fill;
+}
+.thumbnail {
+	width: 70px;
+	height: 70px;
+	overflow: hidden;
+	list-style: none;
+	margin: 0 0.2rem;
+	cursor: pointer;
+}
+.thumbnail img {
+	width: 100%;
+	height: auto;
+}
+.thumbnail {
+	opacity: 0.3;
+}
+.thumbnail.is-active {
+	opacity: 1;
+}
+
+#mainListings img
+{
+	display: flex;
+	margin: 1rem auto 0;
+	padding: 0;
+	justify-content: center;
+	height: 300px;
+	width: 100%;
+	object-fit: cover;
 }

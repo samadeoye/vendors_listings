@@ -1,4 +1,5 @@
 <?php
+require_once '../inc/utils.php';
 $pageTitle = 'Change Password';
 require_once 'inc/head.php';
 ?>
@@ -87,14 +88,14 @@ $arAdditionalJsOnLoad[] = <<<EOQ
                 dataType: 'json',
                 data: form.serialize(),
                 beforeSend: function() {
-                    enableDisableBtn(formId+' #btnSumbmit', 0);
+                    enableDisableBtn(formId+' #btnSubmit', 0);
                 },
                 complete: function() {
-                    enableDisableBtn(formId+' #btnSumbmit', 1);
+                    enableDisableBtn(formId+' #btnSubmit', 1);
                 },
                 success: function(data)
                 {
-                    if(data.status == true)
+                    if(data.status)
                     {
                         throwSuccess('Password changed successfully!');
                         form[0].reset();

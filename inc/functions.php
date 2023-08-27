@@ -55,24 +55,9 @@ function getUniqIdUpper()
   return strtoupper(uniqid());
 }
 
-function getTransactionReference($type)
+function getTransactionReference()
 {
-  if($type == 'data')
-  {
-    return 'SWZ-DTA-'.getUniqIdUpper();
-  }
-  else if($type == 'airtime')
-  {
-    return 'SWZ-ATM-'.getUniqIdUpper();
-  }
-  else if($type == 'transfer')
-  {
-    return 'SWZ-TRF-'.getUniqIdUpper();
-  }
-  else
-  {
-    return 'SWZ-REF-'.getUniqIdUpper();
-  }
+  return SITE_ABR.'-REF-'.getUniqIdUpper();
 }
 
 function doCheckIfEmpty($data) {
@@ -393,6 +378,26 @@ function getAlertWrapper($id, $close=true)
     <div class="col-md-12">
       <div class="notification {$closeAble} margin-bottom-10" id="{$id}_wrapper">
         <p id="{$id}"></p>
+        {$closeIcon}
+      </div>
+    </div>
+  </div>
+EOQ;
+}
+
+function getAlertWrapperDisplay($msg, $alertClass='error', $close=true)
+{
+  $closeIcon = $closeAble = '';
+  if ($close)
+  {
+    $closeIcon = '<a class="close" href="#"></a>';
+    $closeAble = 'closeable';
+  }
+  return <<<EOQ
+  <div class="row">
+    <div class="col-md-12">
+      <div class="notification {$alertClass} {$closeAble} margin-bottom-10">
+        <p>{$msg}</p>
         {$closeIcon}
       </div>
     </div>

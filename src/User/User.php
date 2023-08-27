@@ -4,10 +4,12 @@ namespace Lamba\User;
 use Exception;
 use Lamba\Crud\Crud;
 use Lamba\Image\Image;
+use Lamba\SendMail\SendMail;
 
 class User
 {
     static $table = DEF_TBL_USERS;
+    static $tablePasswordReset = DEF_TBL_PASSWORD_RESET;
     static $data = [];
     public static function getUser($id, $arFields=['*'])
     {
@@ -58,17 +60,24 @@ class User
         }
         else
         {
+            $newPassword = md5($newPassword);
             $data = [
-                'password' => md5($newPassword),
+                'password' => $newPassword,
                 'mdate' => time()
             ];
-            Crud::update(
+            $update = Crud::update(
                 self::$table,
                 $data,
                 [
                     'id' => $userId
                 ]
             );
+            if ($update)
+            {
+                $rs = $_SESSION['user'];
+                $rs = array_merge($rs, ['password' => $newPassword]);
+                $_SESSION['user'] = $rs;
+            }
         }
     }
     public static function updateUser()
@@ -170,9 +179,25 @@ class User
         );
     }
 
-    public static function getPaidUserIds()
+    public static function getPaidUserIds($businessTypeId='')
     {
-        $rs = self::getPaidUsersInfo(['id']);
+        $arWhere = [
+            'paid' => 1
+        ];
+        if (strlen($businessTypeId) == 36)
+        {
+            $arWhere['business_type_id'] = $businessTypeId;
+        }
+        $arWhere['deleted'] = 0;
+
+        $rs = Crud::select(
+            self::$table,
+            [
+                'columns' => 'id',
+                'where' => $arWhere,
+                'return_type' => 'all'
+            ]
+        );
         $arIds = [];
         foreach($rs as $r)
         {
@@ -203,5 +228,105 @@ class User
             $address = implode(', ', $ar);
         }
         return $address;
+    }
+
+    public static function verifyEmailForPasswordReset()
+    {
+        $email = strtolower(trim($_REQUEST['email']));
+
+        $rs = Crud::select(
+            self::$table,
+            [
+                'columns' => 'fname, lname',
+                'where' => [
+                    'email' => $email
+                ]
+            ]
+        );
+        if ($rs)
+        {
+            //send password reset email
+            $id = getNewId();
+            $name = $rs['fname'] .' '. $rs['lname'];
+            $siteName = SITE_NAME;
+
+            /*
+            $body = "Dear {$rs['fname']},\n";
+            $body .= "Use the link below to complete your password reset on {$siteName}.\n";
+            $body .= "Use the link below to complete your password reset on {$siteName}.\n";
+            $body .= "<a href='resetpassword?id={$id}'>Reset Password</a>";
+            */
+
+            $body = <<<EOQ
+                Dear {$rs['fname']},<br>
+                Use the link below to complete your password reset on {$siteName}.<br>
+                <a href="resetpassword?token={$id}">Reset Password</a>
+
+EOQ;
+
+            $arParams = [
+                'mailTo' => $email,
+                'toName' => $name,
+                'mailFrom' => SITE_MAIL_FROM_EMAIL,
+                'fromName' => SITE_MAIL_FROM_NAME,
+                'isHtml' => true,
+                'bodyHtml' => $body
+            ];
+            SendMail::sendMail($arParams);
+            if (SendMail::$isSent)
+            {
+                $data = [
+                    'id' => $id,
+                    'email' => $email,
+                    'cdate' => time()
+                ];
+                Crud::insert(self::$tablePasswordReset, $data);
+            }
+            else
+            {
+                throw new Exception('An error occured. Please try again.');
+            }
+        }
+        else
+        {
+            throw new Exception('This email does not exist on the system');
+        }
+    }
+
+    public static function resetPassword()
+    {
+        $token = trim($_REQUEST['token']);
+        $password = trim($_REQUEST['password']);
+        $passwordConfirm = trim($_REQUEST['password_confirm']);
+
+        if ($password != $passwordConfirm)
+        {
+            throw new Exception('Passwords do not match!');
+        }
+
+        $rs = Crud::select(
+            self::$tablePasswordReset,
+            [
+                'columns' => 'email',
+                'where' => [
+                    'id' => $token
+                ],
+                'order' => 'cdate DESC',
+                'limit' => 1
+            ]
+        );
+
+        if ($rs)
+        {
+            Crud::update(
+                self::$table,
+                ['password' => md5($password)],
+                ['email' => $rs['email']]
+            );
+        }
+        else
+        {
+            throw new Exception('Token is invalid. Please click the link from your email.');
+        }
     }
 }

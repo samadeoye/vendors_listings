@@ -1,4 +1,5 @@
 <?php
+require_once '../inc/utils.php';
 $pageTitle = 'My Listings';
 require_once 'inc/head.php';
 use Lamba\Listing\Listing;
@@ -9,7 +10,7 @@ use Lamba\Listing\Listing;
         <h3>Edit Listing</h3>
     </div>
     <div class="utf_signin_form style_one">
-        <div class="tab_container alt"> 
+        <div class="tab_container alt">
             <div class="tab_content" id="tab1" style="display:none;">
                 <form method="post" class="login" id="editListingForm" onsubmit="return false;">
                     <?php
@@ -63,7 +64,7 @@ use Lamba\Listing\Listing;
         <div class="row"> 
             <div class="col-lg-12 col-md-12">
                 <div class="utf_dashboard_list_box margin-top-0">
-                    <h4><i class="sl sl-icon-list"></i> My Listings</h4>
+                    <h4><i class="sl sl-icon-list"></i> Comments </h4>
                     <ul id="appListingList">
                         <?php
                             echo Listing::getAppUserListingsContent();
@@ -84,7 +85,6 @@ use Lamba\Listing\Listing;
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <?php
 $arAdditionalJs[] = <<<EOQ
     function showPagination(page)
@@ -133,10 +133,10 @@ $arAdditionalJs[] = <<<EOQ
                 action: 'getEditListingModalData'
             },
             beforeSend: function() {
-                enableDisableBtn(formId+' #btnSumbmit', 0);
+                enableDisableBtn(formId+' #btnSubmit', 0);
             },
             complete: function() {
-                enableDisableBtn(formId+' #btnSumbmit', 1);
+                enableDisableBtn(formId+' #btnSubmit', 1);
             },
             success: function(data)
             {
@@ -149,7 +149,7 @@ $arAdditionalJs[] = <<<EOQ
                 }
                 else
                 {
-                    enableDisableBtn(formId+' #btnSumbmit', 0);
+                    enableDisableBtn(formId+' #btnSubmit', 0);
                     throwError('An error occured while fetching listing details.');
                 }
             }
@@ -224,10 +224,10 @@ $arAdditionalJsOnLoad[] = <<<EOQ
                 processData: false,
                 contentType: false,
                 beforeSend: function() {
-                    enableDisableBtn(formId+' #btnSumbmit', 0);
+                    enableDisableBtn(formId+' #btnSubmit', 0);
                 },
                 complete: function() {
-                    enableDisableBtn(formId+' #btnSumbmit', 1);
+                    enableDisableBtn(formId+' #btnSubmit', 1);
                 },
                 success: function(data)
                 {

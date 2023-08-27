@@ -1,5 +1,4 @@
 <?php
-require_once '../inc/utils.php';
 if (!isset($_SESSION['user']))
 {
   blockOutToMainPage();
@@ -77,7 +76,7 @@ if (count($arAdditionalCSS) > 0)
               <div class="utf_user_name"><span><img src="images/woara/dash_avatar.png" alt="User Img"></span>Hi, <?=stringToTitle($arUser['fname']);?>!</div>
                 <ul>
                   <li><a href="app/profile"><i class="sl sl-icon-user"></i> My Profile</a></li>
-                  <li><a href="app/logout"><i class="sl sl-icon-power"></i> Logout</a></li>
+                  <li id="logoutHeaderBtn"><a><i class="sl sl-icon-power"></i> Logout</a></li>
                 </ul>
               </div>
             </div>
