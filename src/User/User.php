@@ -323,6 +323,8 @@ EOQ;
                 ['password' => md5($password)],
                 ['email' => $rs['email']]
             );
+            //delete password reset log
+            Crud::delete(self::$tablePasswordReset, ['email' => $rs['email']]);
         }
         else
         {

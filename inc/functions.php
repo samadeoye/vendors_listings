@@ -273,7 +273,7 @@ function getMinutesDiff($time1, $time2)
 }
 function getNewId()
 {
-  mt_srand((double)microtime()*10000);
+  mt_srand((int)microtime()*10000);
   $charId = strtoupper(md5(uniqid(rand(), true)));
   $hyphen = chr(45);
   $id = substr($charId, 0, 8).$hyphen
@@ -493,5 +493,11 @@ function stringToUpper($text)
 function stringToTitle($text)
 {
   return ucwords(strtolower($text));
+}
+
+function getAmountWithCurrency($amount, $currencyCode='')
+{
+  $curCode = !empty($currencyCode) ? $currencyCode : DEF_CURRENCY_CODE;
+  return $curCode . ' ' . doNumberFormat($amount);
 }
 ?>

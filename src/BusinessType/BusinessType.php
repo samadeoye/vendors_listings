@@ -11,6 +11,7 @@ class BusinessType
     public static function getBusinessTypes($arFields=['*'])
     {
         $fields = is_array($arFields) ? implode(', ', $arFields) : $arFields;
+
         return Crud::select(
             self::$table,
             [
@@ -19,7 +20,7 @@ class BusinessType
                     'deleted' => 0
                 ],
                 'return_type' => 'all',
-                'order' => 'rank ASC'
+                'order' => '`rank` ASC'
             ]
         );
     }
@@ -29,12 +30,12 @@ class BusinessType
         $rs = Crud::select(
             self::$table,
             [
-                'columns' => 'id, name, img, 0 AS num',
+                'columns' => 'id, name, img',
                 'where' => [
                     'deleted' => 0
                 ],
                 'return_type' => 'all',
-                'order' => 'rank ASC'
+                'order' => '`rank` ASC'
             ]
         );
         if (count($rs) > 0)

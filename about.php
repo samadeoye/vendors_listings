@@ -2,7 +2,6 @@
 require_once 'inc/utils.php';
 $pageTitle = 'About';
 require_once 'inc/head.php';
-
 ?>
 
 <div id="titlebar" class="gradient margin-bottom-0">

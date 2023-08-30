@@ -343,7 +343,8 @@ img {
 	margin-top: 3px;
 }
 #logo img {
-	max-height: 38px;
+	/* max-height: 38px; */
+	max-height: 50px;
 	width: auto;
 	transform: translate3d(0, 0, 0);
 }
@@ -12970,7 +12971,7 @@ button.mfp-close, button.mfp-arrow {
 {
 	#dialogMakePayment.dialog_signin_part
 	{
-		max-width: 50% !important;
+		max-width: 40% !important;
 	}
 }
 

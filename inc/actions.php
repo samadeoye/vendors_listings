@@ -117,6 +117,14 @@ try
                 $data = $rs;
             }
         break;
+        case 'getPaymentsPaginationData':
+            Payment::getPaymentsPaginationData();
+            $rs = Payment::$data;
+            if (count($rs) > 0)
+            {
+                $data = $rs;
+            }
+        break;
     }
 
     $db->commit();

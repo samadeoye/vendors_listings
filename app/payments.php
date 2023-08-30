@@ -1,4 +1,5 @@
 <?php
+use Lamba\Payment\Payment;
 require_once '../inc/utils.php';
 $pageTitle = 'Payments';
 
@@ -15,7 +16,6 @@ if (isset($_GET['tx_ref']) && isset($_GET['transaction_id']) && isset($_GET['sta
     }
     else
     {
-        //handle error message
         $_SESSION['msg'] = [
             'msg' => 'Payment could not be processed successfully. Please try again.',
             'class' => 'error'
@@ -81,109 +81,30 @@ require_once 'inc/head.php';
                 unset($_SESSION['msg']);
             }
         ?>
+
+        
       
         <div class="row">
-            <div class="col-lg-12 col-md-12">
-                <div class="row"> 
-                    <div class="col-lg-3 col-md-6">
-                        <div class="utf_dashboard_block_part color-1">
-                            <div class="utf_dashboard_ic_stat">
-                                <i class="fa fa-money"></i>
-                            </div>	
-                            <div class="utf_dashboard_content_part utf_wallet_totals_item">
-                                <h4>$ 1260.08</h4>
-                                <span>Total Withdrawal Payout</span>					
-                            </div>		  
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="utf_dashboard_block_part color-2">
-                            <div class="utf_dashboard_ic_stat">
-                                <i class="sl sl-icon-wallet"></i>
-                            </div>
-                            <div class="utf_dashboard_content_part utf_wallet_totals_item">
-                                <h4>$ 680.26</h4>
-                                <span>Total Earning Payout</span>					
-                            </div>  
-                        </div>
-                    </div>
-                
-                    <div class="col-lg-3 col-md-6">
-                        <div class="utf_dashboard_block_part color-3">
-                            <div class="utf_dashboard_ic_stat">
-                                <i class="sl sl-icon-list"></i>
-                            </div>
-                            <div class="utf_dashboard_content_part">
-                                <h4>115</h4>
-                                <span>Listing Pending Order</span>					
-                            </div>			  
-                        </div>
-                    </div>
-                
-                    <div class="col-lg-3 col-md-6">
-                        <div class="utf_dashboard_block_part color-4">
-                            <div class="utf_dashboard_ic_stat">
-                                <i class="sl sl-icon-basket"></i>
-                            </div>
-                            <div class="utf_dashboard_content_part">
-                                <h4>228</h4>
-                                <span>Listing Total Order</span>					
-                            </div>				  
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="col-md-12">
                 <a href="#dialogMakePayment" class="myButton btnPrimary sign-in popup-with-zoom-anim"> <i class="sl sl-icon-credit-card"></i> Make Payment</a>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-lg-6 col-md-12">
+            <div class="col-lg-12 col-md-12">
 				<div class="utf_dashboard_list_box invoices with-icons margin-top-20">
-                    <h4>Listings Earning</h4>
-                    <ul>
-                        <li><i class="utf_list_box_icon sl sl-icon-basket-loaded"></i> <strong>The Hot and More Restaurant <span class="list_hotel">Restaurant</span></strong>
-                        <ul>
-                            <li><span>Date:-</span> 12 Jan 2022</li>
-                            <li><span>Order No:-</span> 00403128</li>
-                            <li class="paid"><span>Price:-</span> $178.00</li>												
-                        </ul>
-                        </li>
-                        <li><i class="utf_list_box_icon sl sl-icon-basket-loaded"></i> <strong>Burger House (MG Road) <span class="list_hotel">Burger House</span></strong>
-                            <ul>
-                                <li><span>Date:-</span> 12 Jan 2022</li>
-                                <li><span>Order No:-</span> 00403128</li>
-                                <li class="paid"><span>Price:-</span> $178.00</li>												
-                            </ul>
-                        </li>
-                    </ul>
-				</div>
-            </div>
-			  
-            <div class="col-lg-6 col-md-12">
-				<div class="utf_dashboard_list_box invoices with-icons margin-top-20">
-                    <h4>Listings Payout History</h4>
-                    <ul>
-                        <li><i class="utf_list_box_icon fa fa-paste"></i> <strong>$122  <span class="paid">Paid</span></strong>
-                            <ul>
-                            <li><span>Order Number:-</span> 004128641</li>
-                            <li><span>Date:-</span> 12 Jan 2022</li>
-                            </ul>
-                            <div class="buttons-to-right"> <a href="dashboard_invoice.html" class="button gray"><i class="sl sl-icon-printer"></i> Invoice</a> </div>
-                        </li>
-                        <li><i class="utf_list_box_icon fa fa-paste"></i> <strong>$189 <span class="paid">Paid</span></strong>
-                            <ul>
-                                <li><span>Order Number:-</span> 004312641</li>
-                                <li><span>Date:-</span> 12 Jan 2022</li>
-                            </ul>
-                            <div class="buttons-to-right"> <a href="dashboard_invoice.html" class="button gray"><i class="sl sl-icon-printer"></i> Invoice</a> </div>
-                        </li>			  
+                    <h4>Payment History</h4>
+                    <ul id="paymentsList">
+                        <?php
+                            echo Payment::getPaymentsContent();
+                        ?>  
 					</ul>
 				</div>
+                <div class="clearfix"></div>
+                <div class="utf_pagination_container_part margin-top-30 margin-bottom-30">
+                    <?php
+                        echo Payment::getPaymentsPagination();
+                    ?>
+                </div>
             </div>
-
         </div>
 		
         <?php require_once 'inc/footer.php'; ?>
@@ -193,6 +114,40 @@ require_once 'inc/head.php';
 </div>
 
 <?php
+$arAdditionalJs[] = <<<EOQ
+    function showPagination(page)
+    {
+        if (page <= 0)
+        {
+            return false;
+        }
+        else
+        {
+            $.ajax({
+                url: 'inc/actions',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    page: page,
+                    action: 'getPaymentsPaginationData'
+                },
+                beforeSend: function() {
+                },
+                complete: function() {
+                },
+                success: function(data)
+                {
+                    if(data.status == true)
+                    {
+                        $("#paymentsList").html(data.data['list']);
+                        $("#paymentsPagination").html(data.data['pagination']);
+                    }
+                }
+            });
+        }
+    }
+EOQ;
+
 $arAdditionalJsOnLoad[] = <<<EOQ
     $('#makePaymentForm #btnSubmit').click(function ()
     {

@@ -9,6 +9,7 @@ define('SITE_PHONE', '+2348177196362');
 define('SITE_ADDRESS', 'Ibadan, Nigeria');
 define('SITE_MAIL_FROM_EMAIL', SITE_EMAIL);
 define('SITE_MAIL_FROM_NAME', SITE_NAME);
+define('DEF_CURRENCY_CODE', 'NGN');
 
 define('DEF_KB', 1024);
 define('DEF_MB', 1048576);

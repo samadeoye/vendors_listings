@@ -49,7 +49,7 @@ if (count($arAdditionalCSS) > 0)
     <div id="header">
       <div class="container"> 
         <div class="utf_left_side"> 
-          <div id="logo"> <a href="<?=DEF_FULL_BASE_PATH_URL;?>"><img src="images/logo.png" alt="Logo"></a> </div>
+          <div id="logo"> <a href="<?=DEF_FULL_BASE_PATH_URL;?>"><img src="images/woara/woara-logo.png" alt="Logo"></a> </div>
           <div class="mmenu-trigger">
             <button class="hamburger utfbutton_collapse" type="button">
               <span class="utf_inner_button_box">

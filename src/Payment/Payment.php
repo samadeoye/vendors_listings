@@ -10,6 +10,7 @@ class Payment
     static $table = DEF_TBL_PAYMENTS;
     static $tablePaymentPlans = DEF_TBL_PAYMENT_PLANS;
     static $data = [];
+    static $appPerPage = 20;
 
     public static function getPaymentPlan($id, $arFields=['*'])
     {
@@ -209,5 +210,162 @@ EOQ;
             }
         }
         return false;
+    }
+
+    public static function getPayments($page=1, $arFields=['*'])
+    {
+        global $userId;
+
+        $fields = is_array($arFields) ? implode(', ', $arFields) : $arFields;
+
+        $perPage = self::$appPerPage;
+        if($page <= 1)
+        {
+            $limit = '0,'.$perPage;
+        }
+        else
+        {
+            $offset = doTypeCastDouble(($page - 1) * $perPage);
+            $limit = $offset.','.$perPage;
+        }
+        $data = [
+            'columns' => $fields,
+            'where' => [
+                'user_id' => $userId,
+                'deleted' => 0
+            ],
+            'return_type' => 'all',
+            'order' => 'cdate DESC',
+        ];
+        if($limit != '')
+        {
+            $data['limit'] = $limit;
+        }
+
+        return Crud::select(
+            self::$table,
+            $data
+        );
+    }
+    public static function getPaymentsContent($page=1)
+    {
+        $rs = self::getPayments($page);
+        if (count($rs) == 0)
+        {
+            return 'No payment yet.';
+        }
+
+        $output = '';
+        foreach($rs as $r)
+        {
+            $amount = getAmountWithCurrency($r['amount']);
+            $cdate = getFormattedDate($r['cdate']);
+            $rsx = self::getPaymentPlan($r['plan_id'], ['name']);
+            $plan = $rsx['name'];
+            $expiryDate = '';
+            $statusLabel = 'Paid';
+            $statusClass = 'paid';
+            if ($r['status'] == 0)
+            {
+                $statusLabel = 'Unpaid';
+                $statusClass = 'unpaid';
+            }
+            $output .= <<<EOQ
+            <li><i class="utf_list_box_icon fa fa-paste"></i> <strong> {$amount} <span class="{$statusClass}"> {$statusLabel} </span></strong>
+                <ul>
+                    <li><span>Payment Reference: </span> {$r['reference']} </li>
+                    <li><span>Plan: </span> {$plan} </li>
+                    <li><span>Expires on: </span> {$expiryDate} </li>
+                    <li><span>Date: </span> {$cdate} </li>
+                </ul>
+            </li>
+EOQ;
+        }
+
+        return $output;
+    }
+    public static function getPaymentsTotal()
+    {
+        global $userId;
+
+        $rsTotal = Crud::select(
+            self::$table,
+            [
+                'columns' => 'COUNT(id) AS total',
+                'where' => [
+                    'user_id' => $userId,
+                    'deleted' => 0
+                ],
+            ]
+        );
+        return doTypeCastDouble($rsTotal['total']);
+    }
+    public static function getPaymentsPaginationData()
+    {
+        $page = doTypeCastInt($_REQUEST['page']);
+        $pagination = self::getPaymentsPagination($page);
+        $list = self::getPaymentsContent($page);
+
+        $data = [
+            'pagination' => $pagination,
+            'list' => $list
+        ];
+
+        self::$data = [
+            'status' => true,
+            'data' => $data
+        ];
+    }
+    public static function getPaymentsPagination($page=1)
+    {
+        $total = self::getPaymentsTotal();
+        if ($total == 0)
+        {
+            return '';
+        }
+        //get last page
+        $perPage = self::$appPerPage;
+        $lastPage = ceil($total / $perPage);
+        
+        $prev = $page - 1;
+        $next = $page + 1;
+
+        $prevOnClick = "showPagination('{$prev}')";
+        $nextOnClick = "showPagination('{$next}')";
+        if ($page <= 1)
+        {
+            $prevOnClick = '';
+        }
+        if ($page >= $lastPage)
+        {
+            $nextOnClick = '';
+        }
+
+        $output = <<<EOQ
+        <nav class="pagination" id="paymentsPagination">
+            <input type="hidden" name="currentPage" id="currentPage" value="{$page}">
+            <ul>
+            <li><a onclick="{$prevOnClick}"><i class="sl sl-icon-arrow-left"></i></a></li>
+EOQ;
+        for($i = 1; $i <= $lastPage; $i++)
+        {
+            $current = '';
+            $onClick = "showPagination('{$i}')";
+            if ($i == $page)
+            {
+                $current = 'current-page';
+                $onClick = '';
+            }
+            $output .= <<<EOQ
+            <li><a onclick="{$onClick}" class="{$current}">{$i}</a></li>
+EOQ;
+        }
+        $output .= <<<EOQ
+            <li><a onclick="{$nextOnClick}"><i class="sl sl-icon-arrow-right"></i></a></li>
+            </ul>
+        </nav>
+EOQ;
+
+        return $output;
     }
 }
