@@ -108,7 +108,11 @@ $arBusinessTypes = BusinessType::getBusinessTypesWithCounts();
                 {
                   $rs = User::getUser($r['user_id'], ['business_type_id', 'business_name']);
                   $rsx = BusinessType::getBusinessType($rs['business_type_id'], ['name']);
-                  $businessType = $rsx['name'];
+                  $businessType = '';
+                  if ($rsx)
+                  {
+                    $businessType = $rsx['name'];
+                  }
                   $coverImgFileName = !empty($r['cover_img']) ? $r['cover_img'] : 'dummy.jpg';
                   $shortDesc = !empty($r['short_desc']) ? $r['short_desc'] : substr($r['full_desc'], 0, 200).'...';
                   ?>

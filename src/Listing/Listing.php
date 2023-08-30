@@ -41,6 +41,13 @@ class Listing
 
         $userId = $arUser['id'];
 
+        //check if user's profile is updated
+        $rs = User::getUser($userId);
+        if ($rs['business_type_id'] == '' || $rs['business_name'] == '' || $rs['business_info'] == '' || $rs['phone'] == '' || $rs['address_city'] || $rs['address_state'] == '')
+        {
+            throw new Exception('Please update your profile before adding a listing!');
+        }
+
         $title = stringToUpper(trim($_REQUEST['title']));
         $shortDesc = trim($_REQUEST['short_desc']);
         $fullDesc = trim($_REQUEST['full_desc']);
