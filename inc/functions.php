@@ -99,7 +99,6 @@ function doCheckParamIssetEmpty($param, $data)
     'msg' => ''
   ];
   
-  $param = strtolower($param);
   $method = $data['method'];
   $label = $data['label'];
   $length = isset($data['length']) ? $data['length'] : [0,0];
@@ -316,11 +315,15 @@ function getOptionsWithIds($type, $option)
   }
 }
 
-function getFormattedDate($date)
+function getFormattedDate($date, $format='')
 {
-  if(strlen($date) == 10)
+  if ($date != '')
   {
-    return date('d-m-Y H:i', $date);
+    if(strlen($date) == 10)
+    {
+      $format = !empty($format) ? $format : 'Y-m-d H:i';
+      return date($format, $date);
+    }
   }
   else
   {
@@ -479,7 +482,7 @@ function getSidebarCurrentPage($pageTitle)
 
 function getUserSessionFields()
 {
-  return 'id, fname, lname, email, phone, password, business_name, business_info, address_street, address_city, address_state, business_type_id, logo, cover_img, facebook, instagram, twitter, paid, status';
+  return 'id, fname, lname, email, phone, password, business_name, business_info, address_street, address_city, address_state, business_type_id, logo, cover_img, facebook, instagram, twitter, paid, status, expiry_date';
 }
 
 function getUserSession()
@@ -488,11 +491,19 @@ function getUserSession()
 }
 function stringToUpper($text)
 {
-  return strtoupper(strtolower($text));
+  if ($text != '')
+  {
+    return strtoupper(strtolower($text));
+  }
+  return $text;
 }
 function stringToTitle($text)
 {
-  return ucwords(strtolower($text));
+  if ($text != '')
+  {
+    return ucwords(strtolower($text));
+  }
+  return $text;
 }
 
 function getAmountWithCurrency($amount, $currencyCode='')

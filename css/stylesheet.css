@@ -341,6 +341,7 @@ img {
 #logo {
 	display: inline-block;
 	margin-top: 3px;
+	background-color: #ffffff !important;
 }
 #logo img {
 	/* max-height: 38px; */

@@ -152,6 +152,10 @@ class User
         if ($update)
         {
             $rs = $_SESSION['user'];
+            if ($logoFileName == '' && $rs['logo'] == '')
+            {
+                $data['logo'] = 'dummy.jpg';
+            }
             $rs = array_merge($rs, $data);
             $_SESSION['user'] = $rs;
 
@@ -166,12 +170,14 @@ class User
     public static function getPaidUsersInfo($arFields=['*'])
     {
         $fields = is_array($arFields) ? implode(', ', $arFields) : $arFields;
+        $currentDate = time();
         return Crud::select(
             self::$table,
             [
                 'columns' => $fields,
                 'where' => [
-                    'paid' => 1,
+                    //'paid' => 1,
+                    'expression' => "expiry_date > {$currentDate}",
                     'deleted' => 0
                 ],
                 'return_type' => 'all'
@@ -181,8 +187,10 @@ class User
 
     public static function getPaidUserIds($businessTypeId='')
     {
+        $currentDate = time();
         $arWhere = [
-            'paid' => 1
+            //'paid' => 1
+            'expression' => "expiry_date > {$currentDate}"
         ];
         if (strlen($businessTypeId) == 36)
         {
@@ -204,6 +212,21 @@ class User
             $arIds[] = $r['id'];
         }
         return $arIds;
+    }
+
+    public static function checkIfUserHasActiveSubscription()
+    {
+        global $userId;
+
+        $rs = self::getUser($userId, ['expiry_date']);
+        if ($rs)
+        {
+            if ($rs['expiry_date'] > time())
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static function getUserAddress($street, $city, $state)
@@ -249,6 +272,7 @@ class User
             $id = getNewId();
             $name = $rs['fname'] .' '. $rs['lname'];
             $siteName = SITE_NAME;
+            $siteUrl = SITE_URL;
 
             /*
             $body = "Dear {$rs['fname']},\n";
@@ -260,7 +284,7 @@ class User
             $body = <<<EOQ
                 Dear {$rs['fname']},<br>
                 Use the link below to complete your password reset on {$siteName}.<br>
-                <a href="resetpassword?token={$id}">Reset Password</a>
+                <a href="{$siteUrl}/resetpassword?token={$id}">Reset Password</a>
 
 EOQ;
 

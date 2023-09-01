@@ -77,7 +77,7 @@ $arBusinessTypes = BusinessType::getBusinessTypesWithCounts();
     </div>
     <div class="row"> 
       <div class="col-md-5 col-sm-6 col-xs-12">
-        <img src="" alt="<?=SITE_NAME; ?> Logo">
+        <img src="images/woara/woara-logo.png" alt="<?=SITE_NAME; ?> Logo">
       </div>
       
       <div class="col-md-7 col-sm-6 col-xs-12">

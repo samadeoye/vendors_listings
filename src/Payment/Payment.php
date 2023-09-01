@@ -4,6 +4,7 @@ namespace Lamba\Payment;
 use Exception;
 use Lamba\Crud\Crud;
 use Lamba\Api\Api;
+use Lamba\User\User;
 
 class Payment
 {
@@ -174,7 +175,10 @@ EOQ;
         if ($status == 'successful')
         {
             //verify payment
-            $rs = self::getPayment($txRef, ['id', 'amount']);
+            $rs = self::getPayment($txRef, ['id', 'amount', 'plan_id']);
+            $paymentId = $rs['id'];
+            $paymentAmount = doTypeCastDouble($rs['amount']);
+            $paymentPlanId = $rs['plan_id'];
             if ($rs)
             {
                 //https://api.flutterwave.com/v3/transactions/:id/verify
@@ -192,17 +196,42 @@ EOQ;
                     {
                         if (
                             $res['data']['status'] === "successful"
-                            && doTypeCastDouble($res['data']['amount']) === doTypeCastDouble($rs['amount']))
+                            && doTypeCastDouble($res['data']['amount']) === $paymentAmount)
                         {
+                            //update users table
+                            global $userId;
+                            //get payment plan months
+                            $rs = self::getPaymentPlan($paymentPlanId, ['months']);
+                            $arUser = User::getUser($userId, ['expiry_date']);
+                            $currentExpiryDate = $arUser['expiry_date'];
+                            if ($currentExpiryDate == '')
+                            {
+                                $currentExpiryDate = time();
+                            }
+                            $newExpiryDate = date('Y-m-d h:i:s', $currentExpiryDate);
+                            $newExpiryDate = strtotime($newExpiryDate . ' +' . $rs['months'] . ' month');
+
+                            //update expiry date in user session
+                            $_SESSION['user']['expiry_date'] = $newExpiryDate;
+
+                            Crud::update(
+                                DEF_TBL_USERS,
+                                ['expiry_date' => $newExpiryDate],
+                                ['id' => $userId]
+                            );
+
+                            //update payment table
                             $data = [
                                 'transaction_id' => $transactionId,
-                                'status' => 1
+                                'status' => 1,
+                                'expiry_date' => $newExpiryDate
                             ];
                             Crud::update(
                                 self::$table,
                                 $data,
-                                ['id' => $rs['id']]
+                                ['id' => $paymentId]
                             );
+
                             return true;
                         }
                     }
@@ -260,9 +289,9 @@ EOQ;
         {
             $amount = getAmountWithCurrency($r['amount']);
             $cdate = getFormattedDate($r['cdate']);
+            $expiryDate = getFormattedDate($r['expiry_date'], 'Y-m-d');
             $rsx = self::getPaymentPlan($r['plan_id'], ['name']);
             $plan = $rsx['name'];
-            $expiryDate = '';
             $statusLabel = 'Paid';
             $statusClass = 'paid';
             if ($r['status'] == 0)
@@ -276,7 +305,7 @@ EOQ;
                     <li><span>Payment Reference: </span> {$r['reference']} </li>
                     <li><span>Plan: </span> {$plan} </li>
                     <li><span>Expires on: </span> {$expiryDate} </li>
-                    <li><span>Date: </span> {$cdate} </li>
+                    <li><span>Transaction Date: </span> {$cdate} </li>
                 </ul>
             </li>
 EOQ;
