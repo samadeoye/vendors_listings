@@ -34,13 +34,13 @@ if (count($arAdditionalCSS) > 0)
 <body class="header-one">
 
 <!-- Preloader Start -->
-<!-- <div class="preloader">
-    <div class="utf-preloader">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-</div> -->
+<div class="preloader">
+  <div class="utf-preloader">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
 <!-- Preloader End -->
 
 <!-- Wrapper -->
