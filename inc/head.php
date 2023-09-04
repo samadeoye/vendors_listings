@@ -14,7 +14,7 @@ $arCurrentPage = getCurrentPage($pageTitle);
 <title><?=SITE_NAME; ?> - <?=$pageTitle; ?></title>
 
 <!-- Favicon -->
-<link rel="shortcut icon" href="images/favicon.png">
+<link rel="shortcut icon" href="images/woara/woara-logo.png">
 <!-- Style CSS -->
 <link rel="stylesheet" href="css/stylesheet.css">
 <link rel="stylesheet" href="css/mmenu.css">
