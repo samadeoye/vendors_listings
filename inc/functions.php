@@ -410,7 +410,7 @@ EOQ;
 
 function blockOutToMainPage()
 {
-  header('Location: '.DEF_FULL_BASE_PATH_URL);
+  header('Location: '.DEF_ROOT_PATH);
   exit;
 }
 

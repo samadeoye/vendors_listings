@@ -82,16 +82,13 @@ EOQ;
             {
                 //invoke API
                 $arParams = [
-                    'tx_ref' => $id,
-                    'amount' => $amount,
-                    'currency' => 'NGN',
-                    'redirect_url' => DEF_PAYMENT_REDIRECT_URL,
-                    'customer' => [
-                        'email' => $arUser['email']
-                    ]
+                    'reference' => $id,
+                    'amount' => $amount * 100,
+                    'email' => $arUser['email'],
+                    'callback_url' => DEF_PAYMENT_REDIRECT_URL//'http://localhost/woara/app/payments'
                 ];
                 $arData = [
-                    'url' => DEF_FLW_PAYMENT_URL,
+                    'url' => DEF_PSK_PAYMENT_URL,
                     'method' => 'POST',
                     'body' => $arParams
                 ];
@@ -103,14 +100,23 @@ EOQ;
                     {
                         if (array_key_exists('data', $res))
                         {
-                            if (array_key_exists('link', $res['data']))
+                            if (array_key_exists('authorization_url', $res['data']))
                             {
-                                if ($res['data']['link'] != '')
+                                if ($res['data']['authorization_url'] != '')
                                 {
+                                    if (array_key_exists('reference', $res['data']))
+                                    {
+                                        //update table with S.P. reference
+                                        Crud::update(
+                                            self::$table,
+                                            ['transaction_ref' => $res['data']['reference']],
+                                            ['id' => $id]
+                                        );
+                                    }
                                     self::$data = [
                                         'status' => true,
                                         'data' => [
-                                            'link' => $res['data']['link']
+                                            'link' => $res['data']['authorization_url']
                                         ]
                                     ];
                                 }
@@ -165,7 +171,7 @@ EOQ;
         );
     }
 
-    public static function verifyPayment()
+    public static function verifyPaymentX()
     {
         $txRef = trim($_GET['tx_ref']);
         $transactionId = trim($_GET['transaction_id']);
@@ -223,6 +229,81 @@ EOQ;
                             //update payment table
                             $data = [
                                 'transaction_id' => $transactionId,
+                                'status' => 1,
+                                'expiry_date' => $newExpiryDate
+                            ];
+                            Crud::update(
+                                self::$table,
+                                $data,
+                                ['id' => $paymentId]
+                            );
+
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public static function verifyPayment()
+    {
+        $txRef = trim($_GET['trxref']);
+        $reference = trim($_GET['reference']);
+        
+        //http://localhost/woara/app/payments?trxref=27E9C512-6A9C-6F7A-CC75-D0D380F7793C&reference=27E9C512-6A9C-6F7A-CC75-D0D380F7793C
+        if ($txRef != '' && $reference != '')
+        {
+            //verify payment
+            $rs = self::getPayment($txRef, ['id', 'amount', 'plan_id', 'transaction_ref']);
+            $paymentId = $rs['id'];
+            $paymentAmount = doTypeCastDouble($rs['amount']) * 100;
+            $paymentPlanId = $rs['plan_id'];
+            if ($rs)
+            {
+                //https://api.paystack.co/transaction/verify/{reference}
+                //invoke API
+                $arData = [
+                    'url' => DEF_PSK_VERIFY_PAYMENT_URL.'/'.$reference,
+                    'method' => 'GET'
+                ];
+                $rsx = Api::invokeApiCall($arData);
+                $res = json_decode($rsx, true);
+                //print_r($res);exit;
+                if (array_key_exists('status', $res))
+                {
+                    if ($res['status'])
+                    {
+                        if (
+                            $res['data']['status'] === "success"
+                            && doTypeCastDouble($res['data']['amount']) === $paymentAmount)
+                        {
+                            //update users table
+                            global $userId;
+                            //get payment plan months
+                            $rs = self::getPaymentPlan($paymentPlanId, ['months']);
+                            $arUser = User::getUser($userId, ['expiry_date']);
+                            $currentExpiryDate = $arUser['expiry_date'];
+                            if ($currentExpiryDate == '')
+                            {
+                                $currentExpiryDate = time();
+                            }
+                            $newExpiryDate = date('Y-m-d h:i:s', $currentExpiryDate);
+                            $newExpiryDate = strtotime($newExpiryDate . ' +' . $rs['months'] . ' month');
+
+                            //update expiry date in user session
+                            $_SESSION['user']['expiry_date'] = $newExpiryDate;
+
+                            Crud::update(
+                                DEF_TBL_USERS,
+                                ['expiry_date' => $newExpiryDate],
+                                ['id' => $userId]
+                            );
+
+                            //update payment table
+                            $data = [
+                                'transaction_ref' => $reference,
                                 'status' => 1,
                                 'expiry_date' => $newExpiryDate
                             ];

@@ -31,7 +31,17 @@ define('DEF_FLW_ENCRYPTION_KEY', DEF_FLW_ENCRYPTION_KEY_TEST);
 define('DEF_FLW_PUBLIC_KEY', DEF_FLW_PUBLIC_KEY_TEST);
 define('DEF_FLW_PAYMENT_URL', 'https://api.flutterwave.com/v3/payments');
 define('DEF_FLW_VERIFY_PAYMENT_URL', 'https://api.flutterwave.com/v3/transactions');
-define('DEF_PAYMENT_REDIRECT_URL', SITE_URL.'/app/payments');
+define('DEF_PAYMENT_REDIRECT_URL', DEF_FULL_ROOT_PATH.'/app/payments');
+
+//PAYSTACK
+//TEST
+define('DEF_PSK_SECRET_KEY_TEST', 'sk_test_3d7ca8dca8a56dde2e688bfacf5b4ad15176d1dd');
+define('DEF_PSK_ENCRYPTION_KEY_TEST', 'pk_test_ed374e93dd5d7a4fa72629b7f13aec769b0c6c0b');
+//CURRENT
+define('DEF_PSK_SECRET_KEY', 'sk_test_3d7ca8dca8a56dde2e688bfacf5b4ad15176d1dd');
+define('DEF_PSK_ENCRYPTION_KEY', 'pk_test_ed374e93dd5d7a4fa72629b7f13aec769b0c6c0b');
+define('DEF_PSK_PAYMENT_URL', 'https://api.paystack.co/transaction/initialize');
+define('DEF_PSK_VERIFY_PAYMENT_URL', 'https://api.paystack.co/transaction/verify');
 
 //TABLES
 define('DEF_TBL_USERS', 'users');

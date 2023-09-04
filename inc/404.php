@@ -10,7 +10,7 @@ require_once 'head.php';
         <h2>Page Not Found</h2>
         <nav id="breadcrumbs">
           <ul>
-            <li><a href="<?=DEF_FULL_BASE_PATH_URL; ?>">Home</a></li>
+            <li><a href="<?=DEF_ROOT_PATH; ?>">Home</a></li>
             <li>Page Not Found</li>
           </ul>
         </nav>

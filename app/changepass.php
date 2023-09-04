@@ -15,7 +15,7 @@ require_once 'inc/head.php';
                     <h2><?=$pageTitle;?></h2>
                     <nav id="breadcrumbs">
                     <ul>
-                        <li><a href="<?=DEF_FULL_BASE_PATH_URL;?>">Home</a></li>
+                        <li><a href="<?=DEF_ROOT_PATH;?>">Home</a></li>
                         <li><a href="app/">Dashboard</a></li>
                         <li><?=$pageTitle;?></li>
                     </ul>

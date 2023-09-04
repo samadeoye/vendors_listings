@@ -16,7 +16,7 @@ use Lamba\Dashboard\DashboardAnalytics;
                     <h2><?=$pageTitle;?></h2>
                     <nav id="breadcrumbs">
                     <ul>
-                    <li><a href="<?=DEF_FULL_BASE_PATH_URL;?>">Home</a></li>
+                    <li><a href="<?=DEF_ROOT_PATH;?>">Home</a></li>
                         <li>Dashboard</li>
                     </ul>
                     </nav>

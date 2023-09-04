@@ -4,7 +4,28 @@ require_once '../inc/utils.php';
 $pageTitle = 'Payments';
 
 $isVerify = false;
+/*
 if (isset($_GET['tx_ref']) && isset($_GET['transaction_id']) && isset($_GET['status']))
+{
+    $isVerify = true;
+    if (Lamba\Payment\Payment::verifyPayment())
+    {
+        $_SESSION['msg'] = [
+            'msg' => 'Payment completed successfully',
+            'class' => 'success'
+        ];
+    }
+    else
+    {
+        $_SESSION['msg'] = [
+            'msg' => 'Payment could not be processed successfully. Please try again.',
+            'class' => 'error'
+        ];
+    }
+    header('location: payments');
+}
+*/
+if (isset($_GET['trxref']) && isset($_GET['reference']))
 {
     $isVerify = true;
     if (Lamba\Payment\Payment::verifyPayment())
@@ -65,7 +86,7 @@ require_once 'inc/head.php';
                     <h2><?=$pageTitle;?></h2>
                     <nav id="breadcrumbs">
                     <ul>
-                        <li><a href="<?=DEF_FULL_BASE_PATH_URL;?>">Home</a></li>
+                        <li><a href="<?=DEF_ROOT_PATH;?>">Home</a></li>
                         <li><a href="app/">Dashboard</a></li>
                         <li><?=$pageTitle;?></li>
                     </ul>

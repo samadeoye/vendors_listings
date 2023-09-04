@@ -123,10 +123,10 @@ $(document).ready(function() {
         {
           if(data.status == true)
           {
-            showAlert('Registration successful!', 'alert_register', 'success');
+            showAlert('Registration successful! Logging you in...', 'alert_register', 'success');
             $form[0].reset();
             //redirect to dashboard
-            window.location.href = "/app/";
+            window.location.href = "app/";
           }
           else
           {
@@ -177,10 +177,10 @@ $(document).ready(function() {
         {
           if(data.status == true)
           {
-            showAlert('Login successful!', 'alert_login', 'success');
+            showAlert('Login successful! Logging you in...', 'alert_login', 'success');
             $form[0].reset();
             //redirect to dashboard
-            window.location.href = '<?=DEF_FULL_BASE_PATH_URL; ?>'+'app/';
+            window.location.href = 'app/';
           }
           else
           {

@@ -8,7 +8,7 @@ $arCurrentPage = getCurrentPage($pageTitle);
 <head>
 <meta name="author" content="">
 <meta name="description" content="">
-<base href="<?php echo DEF_FULL_BASE_PATH_URL; ?>">
+<base href="<?php echo DEF_ROOT_PATH; ?>/">
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><?=SITE_NAME; ?> - <?=$pageTitle; ?></title>
@@ -49,7 +49,7 @@ if (count($arAdditionalCSS) > 0)
     <div id="header">
       <div class="container"> 
         <div class="utf_left_side"> 
-          <div id="logo"> <a href="<?=DEF_FULL_BASE_PATH_URL;?>"><img src="images/woara/woara-logo.png" alt="Logo"></a> </div>
+          <div id="logo"> <a href="<?=DEF_ROOT_PATH;?>"><img src="images/woara/woara-logo.png" alt="Logo"></a> </div>
           <div class="mmenu-trigger">
             <button class="hamburger utfbutton_collapse" type="button">
               <span class="utf_inner_button_box">
@@ -59,7 +59,7 @@ if (count($arAdditionalCSS) > 0)
           </div>
           <nav id="navigation" class="style_one">
             <ul id="responsive">
-              <li><a class="<?=$arCurrentPage['home'];?>" href="<?=DEF_FULL_BASE_PATH_URL;?>">Home</a></li>
+              <li><a class="<?=$arCurrentPage['home'];?>" href="<?=DEF_ROOT_PATH;?>">Home</a></li>
               <li><a class="<?=$arCurrentPage['listings'];?>" href="listings">Listings</a></li>
               <li><a class="<?=$arCurrentPage['about'];?>" href="about">About</a></li>
               <li><a class="<?=$arCurrentPage['contact'];?>" href="contact">Contact</a></li>

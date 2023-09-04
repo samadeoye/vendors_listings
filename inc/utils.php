@@ -1,26 +1,25 @@
 <?php
 session_start();
 
-$isProductionServer = $isLocal = false;
-
-require_once 'constants.php';
-
 $httpHost = $_SERVER['HTTP_HOST'];
-$httpFolderPath = '/';
-if($httpHost == SITE_DOMAIN)
+$httpFolderPath = '';
+$isProductionServer = true;
+$isLocal = false;
+if ($httpHost == 'localhost')
 {
-    $isProductionServer = true;
-    $httpHost = 'https://'.$httpHost;
+    //LOCAL
+    $httpFolderPath = '/woara';
+    $httpHost = 'http://'.$httpHost;
+    $isProductionServer = false;
+    $isLocal = true;
 }
 else
 {
-    //LOCAL
-    $httpFolderPath = 'woara/';
-    $isLocal = true;
-    $httpHost = 'http://'.$httpHost;
+    //PRODUCTION
+    $httpHost = 'https://'.$httpHost;
 }
-$fullPathUrl = $httpHost .'/'. $httpFolderPath;
-define('DEF_FULL_BASE_PATH_URL', $fullPathUrl);
+define('DEF_ROOT_PATH', $httpFolderPath);
+define('DEF_FULL_ROOT_PATH', $httpHost.$httpFolderPath);
 define('DEF_IS_PRODUCTION', $isProductionServer);
 define('DEF_IS_LOCAL', $isLocal);
 
@@ -31,11 +30,12 @@ if(DEF_IS_LOCAL)
     error_reporting(E_ALL);
 }
 
-define('DEF_DOC_ROOT', $_SERVER['DOCUMENT_ROOT'] .'/'. $httpFolderPath);
+define('DEF_DOC_ROOT', $_SERVER['DOCUMENT_ROOT'] .'/'. $httpFolderPath . '/');
 
 require_once DEF_DOC_ROOT.'vendor/autoload.php';
-require_once 'functions.php';
-require_once 'connect.php';
+require_once DEF_DOC_ROOT.'inc/functions.php';
+require_once DEF_DOC_ROOT.'inc/constants.php';
+require_once DEF_DOC_ROOT.'inc/connect.php';
 
 if(isset($_SESSION['user']))
 {
