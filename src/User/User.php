@@ -272,7 +272,7 @@ class User
             $id = getNewId();
             $name = $rs['fname'] .' '. $rs['lname'];
             $siteName = SITE_NAME;
-            $siteRootPath = DEF_ROOT_PATH;
+            $siteRootPath = DEF_FULL_ROOT_PATH;
 
             /*
             $body = "Dear {$rs['fname']},\n";
