@@ -77,11 +77,12 @@ class SendMail
             if ($isHtml)
             {
                 $mail->isHTML(true);
-                if ($bodyHtml == '')
+                if ($bodyHtml == '' && $body != '')
                 {
                     $mail->AltBody = $body;
-                    $body = $bodyHtml;
+                    $bodyHtml = $body;
                 }
+                $body = $bodyHtml;
             }
             else
             {
@@ -90,8 +91,15 @@ class SendMail
             $mail->Subject = $subject;
             $mail->Body = $body;
 
-            $mail->send();
-            self::$isSent = true;
+            if ($mail->send())
+            {
+                self::$isSent = true;
+            }
+            else
+            {
+                self::$isSent = false;
+                throw new Exception('Message could not be sent');
+            }
         }
         catch (Exception $e)
         {

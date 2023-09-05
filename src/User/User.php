@@ -272,7 +272,7 @@ class User
             $id = getNewId();
             $name = $rs['fname'] .' '. $rs['lname'];
             $siteName = SITE_NAME;
-            $siteUrl = SITE_URL;
+            $siteRootPath = DEF_ROOT_PATH;
 
             /*
             $body = "Dear {$rs['fname']},\n";
@@ -284,7 +284,7 @@ class User
             $body = <<<EOQ
                 Dear {$rs['fname']},<br>
                 Use the link below to complete your password reset on {$siteName}.<br>
-                <a href="{$siteUrl}/resetpassword?token={$id}">Reset Password</a>
+                <a href="{$siteRootPath}/app/resetpassword?token={$id}">Reset Password</a>
 
 EOQ;
 
