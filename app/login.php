@@ -22,7 +22,7 @@ require_once DEF_DOC_ROOT.'inc/head.php';
 
 <section class="fullwidth_block" data-background-color="#fff">
     <div class="container">
-        <div class="row margin-top-50">
+        <div class="row margin-top-20">
             <div class="col-md-2"></div>
             <div class="col-md-8">
                 <div class="utf_signin_form">
