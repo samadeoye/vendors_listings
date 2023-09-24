@@ -13,8 +13,8 @@ define('DEF_CURRENCY_CODE', 'NGN');
 
 define('DEF_KB', 1024);
 define('DEF_MB', 1048576);
-define('DEF_ANNUAL_PLAN_FEE', 20000);
-define('DEF_SIX_MONTHS_PLAN_FEE', 10000);
+define('DEF_ANNUAL_PLAN_FEE', 10000);
+define('DEF_MONTHLY_PLAN_FEE', 1000);
 
 //FLUTTERWAVE
 //LIVE
@@ -34,12 +34,14 @@ define('DEF_FLW_VERIFY_PAYMENT_URL', 'https://api.flutterwave.com/v3/transaction
 define('DEF_PAYMENT_REDIRECT_URL', DEF_FULL_ROOT_PATH.'/app/payments');
 
 //PAYSTACK
+//LIVE
+define('DEF_PSK_SECRET_KEY_LIVE', 'sk_live_51cb4e5b6323279156fa005039c8da72da9c8109');
+define('DEF_PSK_PUBLIC_KEY_LIVE', 'pk_live_e2e0fad26835862ba88a55e34850659519de4e57');
 //TEST
 define('DEF_PSK_SECRET_KEY_TEST', 'sk_test_3d7ca8dca8a56dde2e688bfacf5b4ad15176d1dd');
-define('DEF_PSK_ENCRYPTION_KEY_TEST', 'pk_test_ed374e93dd5d7a4fa72629b7f13aec769b0c6c0b');
+define('DEF_PSK_PUBLIC_KEY_TEST', 'pk_test_ed374e93dd5d7a4fa72629b7f13aec769b0c6c0b');
 //CURRENT
 define('DEF_PSK_SECRET_KEY', 'sk_test_3d7ca8dca8a56dde2e688bfacf5b4ad15176d1dd');
-define('DEF_PSK_ENCRYPTION_KEY', 'pk_test_ed374e93dd5d7a4fa72629b7f13aec769b0c6c0b');
 define('DEF_PSK_PAYMENT_URL', 'https://api.paystack.co/transaction/initialize');
 define('DEF_PSK_VERIFY_PAYMENT_URL', 'https://api.paystack.co/transaction/verify');
 

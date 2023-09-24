@@ -28,7 +28,7 @@ require_once 'inc/head.php';
             </div>
         </div>
         <div>
-            <?=SITE_NAME;?> provides vendors in the line of <b>hair (sales, rentals & partnerships)</b>, jewelleries, skincare and perfumes a platform to explore in their line of business. With a reasonably low amount, you get to put your business to the world.<br>
+            <?=SITE_NAME;?> provides vendors dealing in the line of hair, jewelleries, skincare and perfumes a platform to explore in their line of business. With a reasonably low amount, you get to put your business to the world.<br>
             Be visible! Obtain new customers and generate more traffic. Improve social media engagement. Get reviews and grow business reputation online. Your company profile can include contacts and description, photo gallery and your business location.
         </div>
     </div>
@@ -91,16 +91,17 @@ require_once 'inc/head.php';
             
                 <div class="plan featured col-md-6 col-sm-6 col-xs-12 active">
                     <div class="utf_price_plan">
-                        <h3>Semiannual</h3>
-                        <span class="value">NGN <?=doNumberFormat(DEF_SIX_MONTHS_PLAN_FEE);?> <span>/ 6 Months</span></span>
+                        <h3>Monthly</h3>
+                        <span class="value">NGN <?=doNumberFormat(DEF_MONTHLY_PLAN_FEE);?> <span>/ Month</span></span>
                     </div>
                     <div class="utf_price_plan_features">
                         <ul>
-                            <li>Paid every 6 months</li>
+                            <li>Paid monthly</li>
                             <li>Multiple Listings</li>
                             <li>Featured In Search Results</li>
                             <li>24/7 Support</li>
                         </ul>
+                        <a href="#dialog_signin_part" class="button border sign-in popup-with-zoom-anim"><i class="fa fa-sign-in"></i> Sign In</a>
                         <a class="button border" href="app"><i class="sl sl-icon-cursor"></i> Get Started </a>
                     </div>
                 </div>

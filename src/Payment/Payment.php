@@ -68,8 +68,7 @@ EOQ;
             //initiate payment
             $id = getNewId();
             $reference = getTransactionReference();
-            //$amount = $rs['amount'];
-            $amount = 3000;
+            $amount = $rs['amount'];
             $data = [
                 'id' => $id,
                 'reference' => $reference,
@@ -252,7 +251,6 @@ EOQ;
         $txRef = trim($_GET['trxref']);
         $reference = trim($_GET['reference']);
         
-        //http://localhost/woara/app/payments?trxref=27E9C512-6A9C-6F7A-CC75-D0D380F7793C&reference=27E9C512-6A9C-6F7A-CC75-D0D380F7793C
         if ($txRef != '' && $reference != '')
         {
             //verify payment

@@ -6577,7 +6577,14 @@ body .notification strong {
 .utf_signin_form .utf_tabs_nav li a {
 	padding:15px;
 	color: #666;
-	background:#f4f4f4;
+	/* background:#f4f4f4; */
+	background:#fff;
+	border-radius:4px;
+}
+.utf_signin_form .utf_tabs_nav li.active a {
+	color: #ff2222 !important;
+	background:#fff !important;
+	border: none !important;
 	border-radius:4px;
 }
 .utf_signin_form .utf_tabs_nav li a:hover, .utf_signin_form .utf_tabs_nav li.active a {

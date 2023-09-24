@@ -26,12 +26,12 @@
             }
             else
             { ?>
-              <li><a href="#dialog_signin_part" class="sign-in popup-with-zoom-anim"> Sign In </a></li>
+              <li><a href="app/login" class="sign-in"> Sign In </a></li>
             <?php
             }
             ?>
           </ul>
-        </div>     
+        </div>
       </div>
       
       <div class="row">

@@ -77,83 +77,10 @@ if (count($arAdditionalCSS) > 0)
             }
             else
             { ?>
-              <a href="#dialog_signin_part" class="button border sign-in popup-with-zoom-anim"><i class="fa fa-sign-in"></i> Sign In</a>
+              <a href="app/login" class="button border"><i class="fa fa-sign-in"></i> Sign In</a>
             <?php
             }
             ?>
-          </div>
-        </div>
-        
-        <div id="dialog_signin_part" class="dialog_signin_part zoom-anim-dialog mfp-hide">
-          <div class="small_dialog_header">
-            <h3>Sign In</h3>
-          </div>
-          <div class="utf_signin_form style_one">
-            <ul class="utf_tabs_nav">
-              <li class=""><a href="#tab1">Log In</a></li>
-              <li><a href="#tab2">Register</a></li>
-            </ul>
-            <div class="tab_container alt"> 
-              <div class="tab_content" id="tab1" style="display:none;">
-                <form method="post" class="login" id="loginForm" onsubmit="return false;">
-                  <?php
-                    echo getAlertWrapper('alert_login');
-                  ?>
-                  <input type="hidden" name="action" id="action" value="login">
-                  <p class="utf_row_form utf_form_wide_block">
-                    <label for="email">
-                      <input type="text" class="input-text" name="email" id="email" value="" placeholder="Email" />
-                    </label>
-                  </p>
-                  <p class="utf_row_form utf_form_wide_block">
-                    <label for="password">
-                      <input class="input-text" type="password" name="password" id="password" placeholder="Password"/>
-                    </label>
-                  </p>
-                  <div class="utf_row_form utf_form_wide_block form_forgot_part">
-                    <span class="lost_password fl_left"> <a href="app/forgotpass">Forgot Password?</a> </span>
-                  </div>
-                  <div class="utf_row_form">
-                    <button class="button border fw margin-top-10" id="btnSubmit">Login</button>
-                  </div>
-                </form>
-              </div>
-              
-              <div class="tab_content" id="tab2" style="display:none;">
-                <form method="post" class="register" id="registerForm" onsubmit="return false;">
-                  <?php
-                    echo getAlertWrapper('alert_register');
-                  ?>
-                  <input type="hidden" name="action" id="action" value="register">
-                  <p class="utf_row_form utf_form_wide_block">
-                    <label for="fname">
-                      <input type="text" class="input-text" name="fname" id="fname" placeholder="First Name" />
-                    </label>
-                  </p>
-                  <p class="utf_row_form utf_form_wide_block">
-                    <label for="lname">
-                      <input type="text" class="input-text" name="lname" id="lname" placeholder="Last Name" />
-                    </label>
-                  </p>
-                  <p class="utf_row_form utf_form_wide_block">
-                    <label for="email">
-                      <input type="text" class="input-text" name="email" id="email" placeholder="Email" />
-                    </label>
-                  </p>
-                  <p class="utf_row_form utf_form_wide_block">
-                    <label for="password1">
-                      <input class="input-text" type="password" name="password1" id="password1" placeholder="Password" />
-                    </label>
-                  </p>
-                  <p class="utf_row_form utf_form_wide_block">
-                    <label for="password2">
-                      <input class="input-text" type="password" name="password2" id="password2" placeholder="Confirm Password" />
-                    </label>
-                  </p>
-                  <button class="button border fw margin-top-10" id="btnSubmit">Register</button>
-                </form>
-              </div>
-            </div>
           </div>
         </div>
 

@@ -368,7 +368,7 @@ function throwInvalidDOBError($msg='')
   $msg = !empty($msg) ? $msg : 'Invalid Date of Birth';
   getJsonRow(false, $msg);
 }
-function getAlertWrapper($id, $close=true)
+function getAlertWrapper($id, $close=false)
 {
   $closeIcon = $closeAble = '';
   if ($close)
