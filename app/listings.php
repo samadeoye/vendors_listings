@@ -1,8 +1,8 @@
 <?php
 require_once '../inc/utils.php';
+use Lamba\Listing\Listing;
 $pageTitle = 'My Listings';
 require_once 'inc/head.php';
-use Lamba\Listing\Listing;
 ?>
 
 <div id="dialogEditListing" class="dialog_signin_part zoom-anim-dialog mfp-hide">
@@ -64,7 +64,7 @@ use Lamba\Listing\Listing;
         <div class="row"> 
             <div class="col-lg-12 col-md-12">
                 <div class="utf_dashboard_list_box margin-top-0">
-                    <h4><i class="sl sl-icon-list"></i> Comments </h4>
+                    <h4><i class="sl sl-icon-list"></i> Listings </h4>
                     <ul id="appListingList">
                         <?php
                             echo Listing::getAppUserListingsContent();

@@ -97,7 +97,7 @@ class User
         $instagram = trim($_REQUEST['instagram']);
         $twitter = trim($_REQUEST['twitter']);
         //process images
-        $logoFileSize = $_FILES['logo']['size'];
+        $logoFileSize = $_FILES['logo_img']['size'];
         $coverImgFileSize = $_FILES['cover_img']['size'];
         
         $logoFileName = $coverImgFileName = '';

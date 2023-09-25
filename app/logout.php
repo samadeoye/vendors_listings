@@ -4,4 +4,4 @@ require_once '../inc/utils.php';
 unset($_SESSION['user']);
 session_destroy();
 
-header('Location: '.DEF_ROOT_PATH);
+header('Location: '.DEF_ROOT_PATH.'/');

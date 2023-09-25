@@ -52,7 +52,9 @@ if (count($arAdditionalCSS) > 0)
     <div id="header" class="not-sticky">
       <div class="container"> 
         <div class="utf_left_side"> 
-          <div id="logo"> <a href="<?DEF_ROOT_PATH; ?>"><img src="images/woara/woara-logo.png" alt="<?=SITE_NAME;?>"></a> <a href="<?=DEF_ROOT_PATH;?>" class="dashboard-logo"><img src="images/woara/woara-logo.png" alt=""></a> </div>
+          <div id="logo"> <a href="<?DEF_ROOT_PATH; ?>">
+            <img src="images/woara/woara-logo.png" alt="<?=SITE_NAME;?>"></a> <a href="<?=DEF_ROOT_PATH;?>" class="dashboard-logo"><img src="images/woara/woara-logo.png" alt=""></a>
+          </div>
           <div class="mmenu-trigger">
             <button class="hamburger utfbutton_collapse" type="button">
               <span class="utf_inner_button_box">
@@ -73,15 +75,18 @@ if (count($arAdditionalCSS) > 0)
         <div class="utf_right_side"> 
           <div class="header_widget"> 
             <div class="utf_user_menu">
-              <div class="utf_user_name"><span><img src="images/woara/dash_avatar.png" alt="User Img"></span>Hi, <?=stringToTitle($arUser['fname']);?>!</div>
-                <ul>
-                  <li><a href="app/profile"><i class="sl sl-icon-user"></i> My Profile</a></li>
-                  <li id="logoutHeaderBtn"><a><i class="sl sl-icon-power"></i> Logout</a></li>
-                </ul>
+              <div class="utf_user_name">
+                <span><img src="images/woara/dash_avatar.png" alt="User Img"></span>Hi, <?=stringToTitle($arUser['fname']);?>!
               </div>
+              <ul>
+                <li><a href="app/profile"><i class="sl sl-icon-user"></i> My Profile</a></li>
+                <li id="logoutHeaderBtn"><a><i class="sl sl-icon-power"></i> Logout</a></li>
+              </ul>
             </div>
+          </div>
         </div>
       </div>
     </div>
   </header>
   <div class="clearfix"></div>
+</div>

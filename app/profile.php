@@ -74,7 +74,7 @@ require_once 'inc/head.php';
                                     </div>
                                     <div class="col-md-6">
                                         <label>Business Logo</label>
-                                        <input type="file" class="input-text" name="logo" id="logo">
+                                        <input type="file" class="input-text" accept="image/*" name="logo_img" id="logo_img">
                                     </div>
                                     <div class="col-md-6">
                                         <label>Business Cover Image</label>
@@ -161,7 +161,7 @@ $arAdditionalJsOnLoad[] = <<<EOQ
                         $(formId+' #facebook').val(data.data['facebook']);
                         $(formId+' #instagram').val(data.data['instagram']);
                         $(formId+' #twitter').val(data.data['twitter']);
-                        $(formId+' #logo').val('');
+                        $(formId+' #logo_img').val('');
                         $(formId+' #cover_img').val('');
                         $('#userLogo').attr('src', 'images/woara/users/'+data.data['logo']);
                     }

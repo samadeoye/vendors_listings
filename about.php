@@ -85,7 +85,7 @@ require_once 'inc/head.php';
                             <li>Featured In Search Results</li>
                             <li>24/7 Support</li>
                         </ul>
-                        <a class="button border" href="app"><i class="sl sl-icon-cursor"></i> Get Started </a>
+                        <a class="button border" href="app/login"><i class="sl sl-icon-cursor"></i> Get Started </a>
                     </div>
                 </div>
             
@@ -101,8 +101,7 @@ require_once 'inc/head.php';
                             <li>Featured In Search Results</li>
                             <li>24/7 Support</li>
                         </ul>
-                        <a href="#dialog_signin_part" class="button border sign-in popup-with-zoom-anim"><i class="fa fa-sign-in"></i> Sign In</a>
-                        <a class="button border" href="app"><i class="sl sl-icon-cursor"></i> Get Started </a>
+                        <a class="button border" href="app/login"><i class="sl sl-icon-cursor"></i> Get Started </a>
                     </div>
                 </div>
                
