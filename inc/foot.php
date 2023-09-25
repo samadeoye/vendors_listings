@@ -4,7 +4,7 @@
       <div class="row">
 		<div class="col-md-4 col-sm-12 col-xs-12"> 
           <h4>About Us</h4>
-          <p>WoAra provides vendors in the line of hair (sales, rentals & partnerships), jewelleries, skincare and perfumes a platform to explore in their line of business. With a reasonably low amount, you get to put your business to the world.</p>          
+          <p>WoAra provides vendors dealing in the line of hair, jewelleries, skincare and perfumes a platform to explore in their line of business. With a reasonably low amount, you get to put your business to the world.</p>          
         </div>
         <div class="col-md-4 col-sm-3 col-xs-6">
           <h4>Useful Links</h4>
