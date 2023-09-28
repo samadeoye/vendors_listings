@@ -43,4 +43,4 @@ if(isset($_SESSION['user']))
     $userId = $arUser['id'];
 }
 
-$arAdditionalCSS = $arAdditionalJs = $arAdditionalJsOnLoad = [];
+$arAdditionalCSS = $arAdditionalJs = $arAdditionalJsScripts = $arAdditionalJsOnLoad = [];

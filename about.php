@@ -73,7 +73,7 @@ require_once 'inc/head.php';
         </div>
         <div class="row">        
             <div class="utf_pricing_container_block margin-top-30 margin-bottom-20"> 
-                <div class="plan featured col-md-6 col-sm-6 col-xs-12">
+                <div class="plan featured col-md-4 col-sm-6 col-xs-12">
                     <div class="utf_price_plan">
                         <h3>Annual</h3>
                         <span class="value">NGN <?=doNumberFormat(DEF_ANNUAL_PLAN_FEE);?> <span>/ Year</span></span> 
@@ -88,8 +88,24 @@ require_once 'inc/head.php';
                         <a class="button border" href="app/login"><i class="sl sl-icon-cursor"></i> Get Started </a>
                     </div>
                 </div>
+
+                <div class="plan featured col-md-4 col-sm-6 col-xs-12">
+                    <div class="utf_price_plan">
+                        <h3>6 Months</h3>
+                        <span class="value">NGN <?=doNumberFormat(DEF_SIX_MONTHS_PLAN_FEE);?> <span>/ 6 Months</span></span> 
+                    </div>
+                    <div class="utf_price_plan_features">
+                        <ul>
+                            <li>Paid Every 6 Months</li>
+                            <li>Multiple Listings</li>
+                            <li>Featured In Search Results</li>
+                            <li>24/7 Support</li>
+                        </ul>
+                        <a class="button border" href="app/login"><i class="sl sl-icon-cursor"></i> Get Started </a>
+                    </div>
+                </div>
             
-                <div class="plan featured col-md-6 col-sm-6 col-xs-12 active">
+                <div class="plan featured col-md-4 col-sm-6 col-xs-12 active">
                     <div class="utf_price_plan">
                         <h3>Monthly</h3>
                         <span class="value">NGN <?=doNumberFormat(DEF_MONTHLY_PLAN_FEE);?> <span>/ Month</span></span>

@@ -1,10 +1,17 @@
 <?php
 require_once 'inc/utils.php';
-$pageTitle = 'Home';
-require_once 'inc/head.php';
 use Lamba\BusinessType\BusinessType;
 use Lamba\Listing\Listing;
 use Lamba\User\User;
+
+$pageTitle = 'Home';
+
+$arAdditionalCSS[] = <<<EOQ
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@1.3.3/dist/css/splide.min.css">
+EOQ;
+
+require_once 'inc/head.php';
+
 $arBusinessTypes = BusinessType::getBusinessTypesWithCounts();
 
 ?>
@@ -14,8 +21,8 @@ $arBusinessTypes = BusinessType::getBusinessTypesWithCounts();
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <h2>Best Place For <span class="typed-words"></span></h2>
-          <h4>Find related verified vendors for all your needs.</h4>
+          <h2>Make yourself beautiful</h2>
+          <h4>FIND YOUR VERIFIED VENDORS</h4>
           <form id="searchForm" onsubmit="return false;">
             <div class="main_input_search_part">
               <div class="main_input_search_part_item">
@@ -41,6 +48,29 @@ $arBusinessTypes = BusinessType::getBusinessTypesWithCounts();
     </div>
   </div>
 </div>
+
+<section class="main-carousel splide adsCorner" aria-label="Ads Gallery">
+  <h2 class="text-center white padding-top-20">Ads Corner</h2>
+  <div class="splide__track padding-bottom-20">
+    <ul class="splide__list">
+      <li class="splide__slide">
+        <img src="images/woara/ads/hair.jpg" alt="">
+      </li>
+      <li class="splide__slide">
+        <img src="images/woara/ads/skincare.jpg" alt="">
+      </li>
+    </ul>
+  </div>
+</section>
+
+<ul id="thumbnails" class="thumbnails">
+  <li class="thumbnail">
+    <img src="images/woara/ads/hair.jpg" alt="">
+  </li>
+  <li class="thumbnail">
+    <img src="images/woara/ads/skincare.jpg" alt="">
+  </li>
+</ul>
 
 <div class="container padding-bottom-70">
   <div class="row">
@@ -81,7 +111,7 @@ $arBusinessTypes = BusinessType::getBusinessTypesWithCounts();
       </div>
       
       <div class="col-md-7 col-sm-6 col-xs-12">
-        <?=SITE_NAME;?> provides vendors in the line of <b>hair (sales, rentals & partnerships)</b>, jewelleries, skincare and perfumes a platform to explore in their line of business. With a reasonably low amount, you get to put your business to the world.<br>
+        <?=SITE_NAME;?> provides vendors dealing in the line of hair, jewelleries, skincare and perfumes a platform to explore in their line of business. With a reasonably low amount, you get to put your business to the world.<br>
         Be visible! Obtain new customers and generate more traffic. Improve social media engagement. Get reviews and grow business reputation online. Your company profile can include contacts and description, photo gallery and your business location.<br>
         <div class="margin-top-15">
           <a href="about" class="myButton btnPrimary">Read More</a>
@@ -155,17 +185,92 @@ $arBusinessTypes = BusinessType::getBusinessTypesWithCounts();
   </div>
 </a>
 
+<section id="main-carousel2" class="main-carousel splide adsCorner" aria-label="Ads Gallery">
+  <h2 class="text-center white padding-top-20">Ads Corner</h2>
+  <div class="splide__track padding-bottom-20">
+    <ul class="splide__list">
+      <li class="splide__slide">
+        <img src="images/woara/ads/perfume.jpg" alt="">
+      </li>
+    </ul>
+  </div>
+</section>
+
+<ul id="thumbnails" class="thumbnails">
+  <li class="thumbnail">
+    <img src="images/woara/ads/perfume.jpg" alt="">
+  </li>
+</ul>
+
 <?php
+$arAdditionalJsScripts[] = <<<EOQ
+<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@1.3.3/dist/js/splide.min.js"></script>
+EOQ;
+
 $arAdditionalJs[] = <<<EOQ
-  var typed = new Typed('.typed-words', {
-  strings: ["Hair Sales"," Hair Rentals"," Hair Business Partnership","Jewelleries","Skincare","Perfumes"],
-    typeSpeed: 80,
-    backSpeed: 80,
-    backDelay: 4000,
-    startDelay: 1000,
-    loop: true,
-    showCursor: true
-  });
+var splide = new Splide( '.main-carousel', {
+  pagination: false,
+} );
+
+var thumbnails = document.getElementsByClassName( 'thumbnail' );
+var current;
+
+for ( var i = 0; i < thumbnails.length; i++ ) {
+  initThumbnail( thumbnails[ i ], i );
+}
+
+function initThumbnail( thumbnail, index ) {
+  thumbnail.addEventListener( 'click', function () {
+  splide.go( index );
+  } );
+}
+
+splide.on( 'mounted move', function () {
+  var thumbnail = thumbnails[ splide.index ];
+
+  if ( thumbnail ) {
+  if ( current ) {
+      current.classList.remove( 'is-active' );
+  }
+
+  thumbnail.classList.add( 'is-active' );
+  current = thumbnail;
+  }
+} );
+
+splide.mount();
+
+var splide2 = new Splide( '#main-carousel2', {
+  pagination: false,
+} );
+
+var thumbnails = document.getElementsByClassName( 'thumbnail' );
+var current;
+
+for ( var i = 0; i < thumbnails.length; i++ ) {
+  initThumbnail( thumbnails[ i ], i );
+}
+
+function initThumbnail( thumbnail, index ) {
+  thumbnail.addEventListener( 'click', function () {
+    splide2.go( index );
+  } );
+}
+
+splide2.on( 'mounted move', function () {
+  var thumbnail = thumbnails[ splide2.index ];
+
+  if ( thumbnail ) {
+  if ( current ) {
+      current.classList.remove( 'is-active' );
+  }
+
+  thumbnail.classList.add( 'is-active' );
+  current = thumbnail;
+  }
+} );
+
+splide2.mount();
 EOQ;
 
 $arAdditionalJsOnLoad[] = <<<EOQ

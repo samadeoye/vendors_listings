@@ -82,6 +82,11 @@ if (count($arAdditionalCSS) > 0)
             }
             ?>
           </div>
+          <span class="mobile-social-icons">
+            <a href="https://www.facebook.com/profile.php?id=61551589875059" class="socialIcon"><i class="fa fa-facebook"></i></a>
+            <a href="https://www.tiktok.com/@woarang" class="socialIcon padding-left-10"><img src="images/woara/tiktok.png"></a>
+            <a href="https://youtube.com/@Woarang?si=AiJ0A2Iv0zZ4rdWI" class="socialIcon padding-left-10"><i class="fa fa-youtube"></i></a>
+          </span>
         </div>
 
       </div>

@@ -15,6 +15,7 @@ define('DEF_CURRENCY_CODE', 'NGN');
 define('DEF_KB', 1024);
 define('DEF_MB', 1048576);
 define('DEF_ANNUAL_PLAN_FEE', 10000);
+define('DEF_SIX_MONTHS_PLAN_FEE', 5500);
 define('DEF_MONTHLY_PLAN_FEE', 1000);
 
 //TABLES

@@ -2,7 +2,7 @@
 <div id="footer" class="footer_sticky_part"> 
     <div class="container">
       <div class="row">
-		<div class="col-md-4 col-sm-12 col-xs-12"> 
+        <div class="col-md-4 col-sm-12 col-xs-12"> 
           <h4>About Us</h4>
           <p>WoAra provides vendors dealing in the line of hair, jewelleries, skincare and perfumes a platform to explore in their line of business. With a reasonably low amount, you get to put your business to the world.</p>          
         </div>
@@ -32,6 +32,16 @@
             ?>
           </ul>
         </div>
+        <div class="col-md-4">
+          <h4>Social</h4>
+          <ul class="social_footer_link">
+            <li>
+              <a href="https://www.facebook.com/profile.php?id=61551589875059" class="socialIcon"><i class="fa fa-facebook"></i></a>
+              <a href="https://www.tiktok.com/@woarang" class="socialIcon padding-left-10"><img src="images/woara/tiktok.png"></a>
+              <a href="https://youtube.com/@Woarang?si=AiJ0A2Iv0zZ4rdWI" class="socialIcon padding-left-10"><i class="fa fa-youtube"></i></a>
+            </li>
+          </ul>
+        </div>
       </div>
       
       <div class="row">
@@ -40,7 +50,10 @@
         </div>
       </div>
     </div>
-  </div>  
+  </div>
+  <a href="https://wa.me/<?= SITE_PHONE; ?>" class="whatsapp-float" target="_blank">
+    <i class="fa fa-whatsapp whatsapp-icon-float"></i>
+  </a>
   <div id="bottom_backto_top"><a href="#"></a></div>
 </div>
 
@@ -59,6 +72,13 @@
 <script src="scripts/typed.js"></script>
 <script src="scripts/functions.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<?php
+if (count($arAdditionalJsScripts) > 0)
+{
+  echo implode(PHP_EOL, $arAdditionalJsScripts);
+}
+?>
+
 <script>
 
 <?php

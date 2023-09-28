@@ -1,5 +1,9 @@
 <?php
 require_once 'inc/utils.php';
+use Lamba\Listing\Listing;
+use Lamba\User\User;
+use Lamba\BusinessType\BusinessType;
+
 $pageTitle = 'Listings';
 
 $arAdditionalCSS[] = <<<EOQ
@@ -7,9 +11,6 @@ $arAdditionalCSS[] = <<<EOQ
 EOQ;
 
 require_once 'inc/head.php';
-use Lamba\Listing\Listing;
-use Lamba\User\User;
-use Lamba\BusinessType\BusinessType;
 
 if (isset($_GET['id']))
 {
@@ -41,7 +42,7 @@ if ($galleryImages != '')
     $arGallery = array_merge([$rs['cover_img']], explode(',', $rs['gallery_img']));
 }
 ?>
-<section id="main-carousel" class="splide" aria-label="My Awesome Gallery">
+<section id="main-carousel" class="splide" aria-label="">
     <div class="splide__track">
     <ul class="splide__list">
     <?php
@@ -173,8 +174,11 @@ if ($galleryImages != '')
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@1.3.3/dist/js/splide.min.js"></script>
 <?php
+$arAdditionalJsScripts[] = <<<EOQ
+<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@1.3.3/dist/js/splide.min.js"></script>
+EOQ;
+
 $arAdditionalJs[] = <<<EOQ
 function showPagination(page)
 {
